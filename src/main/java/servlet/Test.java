@@ -30,7 +30,12 @@ public class Test extends HttpServlet {
 		UserController userController = new UserController();
 		
 		User[] users = userController.getAll();
-		out.println(users[0].getEmail());
+		int userCount = users.length;
+		
+		for(int i = 0; i < userCount; i++)
+		{
+			out.println(users[i].toHTML());
+		}
 	  } catch (ClassNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
