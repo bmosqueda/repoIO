@@ -1,4 +1,4 @@
-package servlet;
+package routes;
 
 import java.io.*;
 import java.sql.SQLException;

@@ -2,6 +2,7 @@
   Database: repoIo
   User: repoIo
   Password: repoIoPass
+  Repo: https://github.com/bmosqueda/repoIO.git
 
 -- Seeds
   -- Schools
@@ -14,6 +15,12 @@
     INSERT INTO users (name, account_number, email, role, school_id) VALUES('Brandon Mosqueda', '20145969', 'bmosqueda@ucol.mx', 1, 1);
     INSERT INTO users (name, account_number, email, role, school_id) VALUES('Charley Jaculina', '10821935', 'plumiform@ucol.mx', 3, 1);
     INSERT INTO users (name, account_number, email, role, school_id) VALUES('Tia Bonhomme', '62613759', 'tbonhome@ucol.mx', 3, 1);
+
+  -- Authors
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Zona Scharmann', 'Z. Scharmann', 'Philippines');
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Etha Nikolai', 'E. Nikolai', 'Nicaragua');
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Simon Munks', 'S. Munks', 'South Sudan');
+
 
 -- Create table:    DROP DATABASE repoIo;
   CREATE DATABASE repoIo;

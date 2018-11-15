@@ -7,7 +7,7 @@
   
   <servlet>
     <servlet-name>Test</servlet-name>
-    <servlet-class>servlet.Test</servlet-class>
+    <servlet-class>routes.Test</servlet-class>
   </servlet>
 
   <servlet-mapping>
