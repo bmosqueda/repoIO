@@ -3,6 +3,8 @@ package controllers;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
+
 import models.User;
 
 public class UserController extends General
@@ -18,6 +20,18 @@ public class UserController extends General
 	public UserController() throws ClassNotFoundException
 	{
 		super();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String usersToJSON(User users[])
+	{
+		JSONArray json = new JSONArray();
+		
+		for (User user : users) {
+			json.add(user.toJSONObject());
+		}
+		
+		return json.toString();
 	}
 	
 	public User[] getAll() throws ClassNotFoundException, SQLException

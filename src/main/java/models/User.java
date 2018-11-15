@@ -1,5 +1,7 @@
 package models;
 
+import org.json.simple.JSONObject;
+
 public class User 
 {
 	private int user_id;
@@ -26,6 +28,30 @@ public class User
 		this.role = role;
 		this.school_id = school_id;
 		this.user_id = user_id;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String toJSON() {
+		JSONObject json = new JSONObject();
+		json.put("email", this.email);
+		json.put("name", this.name);
+		json.put("role", this.role);
+		json.put("school_id", this.school_id);
+		json.put("user_id", this.user_id);
+		
+		return json.toString();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject toJSONObject() {
+		JSONObject json = new JSONObject();
+		json.put("email", this.email);
+		json.put("name", this.name);
+		json.put("role", this.role);
+		json.put("school_id", this.school_id);
+		json.put("user_id", this.user_id);
+		
+		return json;
 	}
 	
 	@Override

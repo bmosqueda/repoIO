@@ -1,7 +1,5 @@
 package apis;
 
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
@@ -16,8 +14,8 @@ import controllers.UserController;
 import models.User;
 
 //Sets the path to base URL + /hello
-@Path("/hello")
-public class Test {
+@Path("/users")
+public class UserAPI {
 
   // This method is called if TEXT_PLAIN is request
   @GET
@@ -27,30 +25,18 @@ public class Test {
     System.out.println(req.getParameter("param"));
     System.out.println("varX: ");
     System.out.println(varX);
-    return "Hello Jersey mundo edit";
+    return "Hello Jersey mundo";
   }
   
   @GET
   @Path("/users")
   @Produces(MediaType.APPLICATION_JSON)
   public String usersJSON(@Context HttpServletRequest req) {
-    try {
-		UserController controller = new UserController();
-		
-		return controller.usersToJSON(controller.getAll());
-	} catch (ClassNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-    return "null";
+    return "Hola mundo";
   }
 
   // This method is called if XML is request
   @POST
-  @Path("/post")
   @Produces(MediaType.APPLICATION_JSON)
   public String sayXMLHello(@Context HttpServletRequest req) {
     HttpSession session= req.getSession();
@@ -62,7 +48,6 @@ public class Test {
 
   // This method is called if HTML is request
   @GET
-  @Path("/html")
   @Produces(MediaType.TEXT_HTML)
   public String sayHtmlHello(@Context HttpServletRequest req) {
     HttpSession session= req.getSession();
