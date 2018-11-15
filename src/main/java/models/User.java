@@ -9,6 +9,7 @@ public class User
 	private String email;
 	private String name;
 	private int role;
+	private String school_name;
 	private int school_id;
 	
 	public User(String account_number, String name, String email, int role, int school_id) {
@@ -30,6 +31,17 @@ public class User
 		this.user_id = user_id;
 	}
 	
+	public User(int user_id, String account_number, String name, String email, int role, int school_id, String school_name) {
+		super();
+		this.account_number = account_number;
+		this.email = email;
+		this.name= name;
+		this.role = role;
+		this.school_id = school_id;
+		this.user_id = user_id;
+		this.school_name= school_name;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public String toJSON() {
 		JSONObject json = new JSONObject();
@@ -38,6 +50,7 @@ public class User
 		json.put("role", this.role);
 		json.put("school_id", this.school_id);
 		json.put("user_id", this.user_id);
+		json.put("school_name", this.school_name);
 		
 		return json.toString();
 	}
@@ -50,6 +63,7 @@ public class User
 		json.put("role", this.role);
 		json.put("school_id", this.school_id);
 		json.put("user_id", this.user_id);
+		json.put("school_name", this.school_name);
 		
 		return json;
 	}
@@ -61,6 +75,7 @@ public class User
 				"Name: " + this.name+ "\n"+
 				"Role: " + this.role+ "\n"+
 				"School_id: " + this.school_id+ "\n"+
+				"School_name: " + this.school_name+ "\n"+
 				"User_id: " + this.user_id+ "\n";
 	}
 	
@@ -70,6 +85,7 @@ public class User
 				"<p>Name: " + this.name+ "</p>"+
 				"<p>Role: " + this.role+ "</p>"+
 				"<p>School_id: " + this.school_id+ "</p>"+
+				"</p>School_name: " + this.school_name+ "</p>"+
 				"<p>User_id: " + this.user_id+ "</p><hr>";
 	}
 	
@@ -108,5 +124,11 @@ public class User
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getSchool_name() {
+		return school_name;
+	}
+	public void setSchool_name(String school_name) {
+		this.school_name = school_name;
 	}
 }

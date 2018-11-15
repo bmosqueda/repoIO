@@ -51,3 +51,17 @@
 127.0.0.1 - - [14/Nov/2018:21:10:22 -0600] "GET /repo.io/api/hello/users HTTP/1.1" 200 317 http-bio-8080-exec-4 11
 127.0.0.1 - - [14/Nov/2018:21:10:23 -0600] "GET /repo.io/api/hello/users HTTP/1.1" 200 317 http-bio-8080-exec-5 9
 127.0.0.1 - - [14/Nov/2018:21:10:39 -0600] "GET /repo.io/api/hello/users HTTP/1.1" 200 269 http-bio-8080-exec-1 450
+127.0.0.1 - - [14/Nov/2018:21:29:08 -0600] "GET /repo.io/api/users HTTP/1.1" 200 15 http-bio-8080-exec-1 226
+127.0.0.1 - - [14/Nov/2018:21:29:12 -0600] "GET /repo.io/api/users/1 HTTP/1.1" 200 19 http-bio-8080-exec-2 146
+127.0.0.1 - - [14/Nov/2018:21:29:16 -0600] "GET /repo.io/api/users/1d HTTP/1.1" 404 967 http-bio-8080-exec-3 12
+127.0.0.1 - - [14/Nov/2018:21:29:19 -0600] "GET /repo.io/api/users/1 HTTP/1.1" 200 19 http-bio-8080-exec-4 19
+127.0.0.1 - - [14/Nov/2018:21:30:10 -0600] "GET /repo.io/api/users/1 HTTP/1.1" 500 4678 http-bio-8080-exec-1 301
+127.0.0.1 - - [14/Nov/2018:21:32:11 -0600] "GET /repo.io/api/users/1 HTTP/1.1" 200 121 http-bio-8080-exec-1 448
+127.0.0.1 - - [14/Nov/2018:21:32:15 -0600] "GET /repo.io/api/users/2 HTTP/1.1" 200 121 http-bio-8080-exec-2 17
+127.0.0.1 - - [14/Nov/2018:21:49:50 -0600] "GET /repo.io/api/users/2 HTTP/1.1" 200 121 http-bio-8080-exec-1 497
+127.0.0.1 - - [14/Nov/2018:21:49:55 -0600] "GET /repo.io/api/users/login HTTP/1.1" 500 4605 http-bio-8080-exec-2 62
+127.0.0.1 - - [14/Nov/2018:21:54:15 -0600] "GET /repo.io/api/users/login HTTP/1.1" 200 10 http-bio-8080-exec-1 395
+127.0.0.1 - - [14/Nov/2018:21:55:06 -0600] "GET /repo.io/api/users/login HTTP/1.1" 200 10 http-bio-8080-exec-1 493
+127.0.0.1 - - [14/Nov/2018:21:56:44 -0600] "GET /repo.io/api/users/login HTTP/1.1" 200 10 http-bio-8080-exec-1 497
+127.0.0.1 - - [14/Nov/2018:21:57:38 -0600] "GET /repo.io/api/users/login HTTP/1.1" 200 10 http-bio-8080-exec-2 13
+0:0:0:0:0:0:0:1 - - [14/Nov/2018:21:58:52 -0600] "POST /repo.io/api/users/login HTTP/1.1" 200 57 http-bio-8080-exec-2 306
