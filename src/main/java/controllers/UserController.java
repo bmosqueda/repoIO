@@ -71,7 +71,9 @@ public class UserController extends General
 				"WHERE user_id = "+id;
 		
 		ArrayList<String[]> rows = this.getBySQL(sql);
+		System.out.println(rows);
 		int rowsCount = rows.size();
+		System.out.println("rowsCount: " + rowsCount);
 		if(rowsCount < 2)
 			return null;
 		

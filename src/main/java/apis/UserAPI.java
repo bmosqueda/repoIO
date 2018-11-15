@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -25,16 +26,19 @@ import models.User;
 //Sets the path to base URL + /hello
 @Path("/users")
 public class UserAPI {
-	private final String nullJSON = "{\"message\": \"null\"}";
-
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getById(@PathParam("id") int id, @Context HttpServletRequest req) {
+	public String getById(@PathParam("id") int id, @Context HttpServletRequest req, @Context HttpServletResponse res) {
 		try {
 			UserController userController = new UserController();
-
-			return userController.getAllInfoById(id).toJSON();
+			User user = userController.getAllInfoById(id);
+			
+			if(user == null) 
+				return Response.getJSONError("Usuario con el id " + id + " no encontrado", 404, res);
+			
+			res.setStatus(500);
+			return user.toJSON();
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -44,7 +48,7 @@ public class UserAPI {
 			e.printStackTrace();
 		}
 
-		return this.nullJSON;
+		return Response.getJSONError("Error al busca el usuario", 500, res);
 	}
 
 	@SuppressWarnings("unchecked")
