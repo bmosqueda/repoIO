@@ -37,7 +37,6 @@ public class UserAPI {
 			if(user == null) 
 				return Response.getJSONError("Usuario con el id " + id + " no encontrado", 404, res);
 			
-			res.setStatus(500);
 			return user.toJSON();
 
 		} catch (ClassNotFoundException e) {
