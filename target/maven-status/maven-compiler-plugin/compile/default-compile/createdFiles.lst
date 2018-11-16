@@ -1,8 +1,6 @@
-controllers/UserController.class
 models/User.class
 apis/Response.class
 apis/Test.class
-apis/UserAPI.class
 models/School.class
 apis/SchoolAPI.class
 controllers/General.class

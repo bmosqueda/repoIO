@@ -16,6 +16,7 @@
 	</servlet-mapping>
 
 	<!-- Routes -->
+	<!-- Login -->
 	<servlet>
 		<servlet-name>login</servlet-name>
 		<jsp-file>/views/login.jsp</jsp-file>
@@ -25,6 +26,7 @@
 		<url-pattern>/iniciar-sesion/</url-pattern>
 	</servlet-mapping>
 	
+	<!-- Index loggued -->
 	<servlet>
 		<servlet-name>search</servlet-name>
 		<jsp-file>/views/main.jsp</jsp-file>
@@ -32,6 +34,26 @@
 	<servlet-mapping>
 		<servlet-name>search</servlet-name>
 		<url-pattern>/buscar/</url-pattern>
+	</servlet-mapping>
+
+	<!-- Sign up -->
+	<servlet>
+		<servlet-name>signUp</servlet-name>
+		<jsp-file>/views/sign-up.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>signUp</servlet-name>
+		<url-pattern>/registro/</url-pattern>
+	</servlet-mapping>
+
+	<!-- Logout -->
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<jsp-file>/views/logout.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/salir/</url-pattern>
 	</servlet-mapping>
 	
 	<!-- APIS -->

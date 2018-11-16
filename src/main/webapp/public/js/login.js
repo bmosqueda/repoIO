@@ -7,8 +7,6 @@ const vue = new Vue({
   },
   methods: {
     login(ev) {
-      console.log(this.email);
-      console.log(this.password);
       ev.preventDefault();
       if(this.email === '' || this.password === '') {
         alert('El correo y la contraseña son necesarios');

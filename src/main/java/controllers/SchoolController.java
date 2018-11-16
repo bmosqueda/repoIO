@@ -34,7 +34,7 @@ public class SchoolController extends General {
 	
 	public School[] getAll() throws ClassNotFoundException, SQLException
 	{
-	  String sql = "SELECT * FROM schools WHERE 1 > 5";
+	  String sql = "SELECT * FROM schools";
 	  ArrayList<String[]> rows = this.getBySQL(sql);
 	  int rowsCount = rows.size();
 	  School schools[] = new School[rowsCount - 1];

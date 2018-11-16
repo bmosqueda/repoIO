@@ -141,6 +141,5 @@
 <!-- Vue.Js-->
 <script src="/repo.io/public/js/vue.min.js"></script>
 <script src="/repo.io/public/js/axios.min.js"></script>
-<script src="/repo.io/public/js/login.js"></script>
 </body>
 </html>

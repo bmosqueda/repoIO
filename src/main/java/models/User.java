@@ -7,6 +7,7 @@ public class User
 	private int user_id;
 	private String account_number;
 	private String email;
+	private String password;	
 	private String name;
 	private int role;
 	private String school_name;
@@ -29,6 +30,15 @@ public class User
 		this.role = role;
 		this.school_id = school_id;
 		this.user_id = user_id;
+	}
+	
+	public User(String account_number, String name, String email, String password, int school_id) {
+		super();
+		this.account_number = account_number;
+		this.email = email;
+		this.password = password;
+		this.name= name;
+		this.school_id = school_id;
 	}
 	
 	public User(int user_id, String account_number, String name, String email, int role, int school_id, String school_name) {
@@ -130,5 +140,12 @@ public class User
 	}
 	public void setSchool_name(String school_name) {
 		this.school_name = school_name;
+	}
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

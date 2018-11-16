@@ -103,12 +103,60 @@ public class UserAPI {
 	// This method is called if XML is request
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public String sayXMLHello(@Context HttpServletRequest req) {
-		HttpSession session= req.getSession();
-		System.out.println(session.getAttribute("hola"));
-		if(session == null)
-			return "{\"err\":\"NADA\"}";
-		return "{\"name\":\""+session.getAttribute("hola")+"\"}";
+	public String insert(@Context HttpServletRequest req, String body, @Context HttpServletResponse res) {
+		HttpSession session = req.getSession(false);
+		
+		if(session != null) 
+			if(session.getAttribute("email") != null)
+				return Response.getJSONError("Ya estás loggueado", 400, res);
+			else 
+				session.invalidate();
+		
+		try {
+			UserController userController = new UserController();
+			JSONParser parser = new JSONParser();
+			
+			JSONObject json = (JSONObject) parser.parse(body);
+			User user = new User(json.get("account_number").toString(),
+					json.get("name").toString(),
+					json.get("email").toString(),
+					json.get("password").toString(),
+					Integer.parseInt(json.get("school_id").toString())
+					);
+			
+			try {
+				userController.insert(user);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(json.get("email") == null || json.get("password") == null)
+				return Response.getJSONError("Correo y contraseña necesarios", 400, res);
+			
+			//User user = userController.login(json.get("email").toString(), json.get("password").toString());
+			
+			if(user == null) 
+				return Response.getJSONError("No hay usuario registrado con esa información", 404, res); 
+			
+			//Start session variables
+			session = req.getSession(true);
+	        session.setAttribute("user_id", user.getUser_id());
+	        session.setAttribute("email", user.getEmail());
+	        session.setAttribute("role_id", user.getRole());
+	        session.setAttribute("school_id", user.getSchool_id());
+
+			return user.toJSON();
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return Response.getJSONError("Error al iniciar sesión", 500, res);
 	}
 
 	// This method is called if HTML is request

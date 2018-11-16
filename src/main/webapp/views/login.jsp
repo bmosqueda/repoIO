@@ -1,27 +1,10 @@
 <% 
-//HttpSession session = request.getSession(false);
+//Ya está loggueado
 if(session.getAttribute("email") != null)
 	response.sendRedirect("/repo.io/buscar/");
-
-out.println(session.getAttribute("email"));
 %>
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- <link rel="icon" href="/public/images/Logos/transparent-ico.png"> -->
-
-<!-- Bulma -->
-<link rel="stylesheet" href="/repo.io/public/css/bulma.min.css">
-<link rel="stylesheet" href="/repo.io/public/fontawesome/css/all.min.css">
-
-
-<title>Inicio de sesión</title>
-</head>
-<body class="is-bold is-light">
-
+<%! String title = "Iniciar sesión"; %>
+<%@ include file="header-no-session.jsp"%>
 	<link rel="stylesheet" href="/repo.io/public/css/login.css">
 	<section class="hero is-success is-fullheight">
 		<div class="hero-body" id="app">
@@ -67,3 +50,4 @@ out.println(session.getAttribute("email"));
 		</div>
 	</section>
 	<%@ include file="footer.jsp"%>
+<script src="/repo.io/public/js/login.js"></script>

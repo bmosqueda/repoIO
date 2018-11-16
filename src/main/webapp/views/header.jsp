@@ -54,8 +54,8 @@
             <a class="navbar-item is-purple has-text-weight-semibold" href="/contacto/">
               Contacto
             </a>
-            <a class="navbar-item is-purple has-text-weight-semibold" href="/acceso/">
-              Acceso
+            <a class="navbar-item is-purple has-text-weight-semibold" href="/repo.io/salir/">
+              Salir
             </a>
           </div>
         </div>

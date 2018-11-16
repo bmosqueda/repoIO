@@ -92,6 +92,54 @@ public class UserController extends General
 		
 	}
 	
+	public boolean insert(User user) throws SQLException {
+		String sql = "INSERT INTO users (name, account_number, email, password, role, school_id) VALUES(?, ?, ?, ?, ?, ?)";
+		
+		try {
+			this.openConnection();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	       
+        PreparedStatement stament = this.connector.prepareStatement(sql);
+        stament.setString(1, user.getName());
+        stament.setString(2, user.getAccount_number());
+        stament.setString(3, user.getEmail());
+        stament.setString(4, user.getPassword());
+        stament.setInt(5, user.getRole());
+        stament.setInt(6, user.getSchool_id());
+        
+        ResultSet resultSet = stament.executeQuery();
+        boolean result = false;
+        try {
+			if(resultSet.next()) {
+				result = true;
+			  /*user = new User(ss
+			    resultSet.getInt("user_id"),
+			    resultSet.getString("account_number"),
+			    resultSet.getString("name"),
+			    resultSet.getString("email"),
+			    resultSet.getInt("role"),
+			    resultSet.getInt("school_id")
+					  );*/
+			}
+			else
+				user = null;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        resultSet.close();
+        this.close();
+		
+        return result;
+	}
+	
 	public User login(String email, String password) throws ClassNotFoundException, SQLException
 	{
 		String sql = "SELECT \n" + 
