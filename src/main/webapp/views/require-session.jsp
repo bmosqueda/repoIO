@@ -1,11 +1,7 @@
-<%@ page session="false" %>
 <% 
-HttpSession nsession = request.getSession(false);
-if(nsession != null)
-{
-	out.println("loggueado");
-	out.println(nsession.getAttribute("user_id"));
-}
+//HttpSession session = request.getSession(false);
+if(session.getAttribute("email") == null)
+	response.sendRedirect("/repo.io/iniciar-sesion/?beforePage="+currentPage);
 
-	response.sendRedirect("/repo.io/iniciar-sesion/");
+out.println(session.getAttribute("email"));
 %>

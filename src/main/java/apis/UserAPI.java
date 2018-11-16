@@ -57,8 +57,13 @@ public class UserAPI {
 	public String usersJSON(@Context HttpServletRequest req, String body, @Context HttpServletResponse res) {
 		HttpSession session = req.getSession(false);
 		
-		if(session != null)
-			return Response.getJSONError("Ya estás loggueado", 400, res);
+		if(session != null) 
+			if(session.getAttribute("email") != null)
+				return Response.getJSONError("Ya estás loggueado", 400, res);
+			else 
+				session.invalidate();
+		
+			//return (String)session.getAttribute("email");
 		
 		try {
 			UserController userController = new UserController();
@@ -75,6 +80,7 @@ public class UserAPI {
 			//Start session variables
 			session = req.getSession(true);
 	        session.setAttribute("user_id", user.getUser_id());
+	        session.setAttribute("email", user.getEmail());
 	        session.setAttribute("role_id", user.getRole());
 	        session.setAttribute("school_id", user.getSchool_id());
 
