@@ -15,7 +15,8 @@ const vue = new Vue({
       school: '',
       password: '',
       confirmation: ''
-    }
+    }, 
+    response: ''
   },
   mounted() {
     console.log("CREATED");
@@ -28,12 +29,49 @@ const vue = new Vue({
         console.error("Hubo un problema al recuperrar las escuelas");
         console.log(error);
         console.log(error.error);
-        this.error = error.error;
+        this.response = error.error;
       });
   },
   methods: {
     signUp(ev) {
       ev.preventDefault();
+
+      if(this.account === '')
+        this.error.account = 'Este campo es requerido';
+      else if(isNaN(this.account))
+        this.error.account = 'El número de cuenta debe ser un número';
+      else
+        this.error.account = '';
+
+      if(this.name === '')
+        this.error.name = 'Este campo es requerido';
+      else
+        this.error.name = '';
+
+      if(this.password === '')
+        this.error.password = 'Este campo es requerido';
+      else
+        this.error.password = '';
+
+      if(this.confirmation === '')
+        this.error.confirmation = 'Este campo es requerido';
+      else
+        this.error.confirmation = '';
+
+      if(this.confirmation !== this.password)
+        this.error.confirmation = 'Las contraseñas no coinciden';
+      else
+        this.error.confirmation = '';
+
+      if(this.school === '')
+        this.error.school = 'Este campo es requerido';
+      else
+        this.error.school = '';
+
+      for(let prop in this.error) {
+        if(this.error[prop] !== '')
+          return;
+      }
 
       let user = {
         account: this.account,
@@ -46,13 +84,14 @@ const vue = new Vue({
 
       window.axios.post('/repo.io/api/users', user)
         .then(({data}) => {
-          //location.href = '/repo.io/buscar/';
+          alert('Se creó tu usuario exitosamente');
+          location.href = '/repo.io/buscar/';
         })
         .catch(({response : {data : error}}) => {
           console.error("Hubo un problema al logguearte");
           console.log(error);
           console.log(error.error);
-          this.error = error.error;
+          this.response = error.error;
         });
     }
   }

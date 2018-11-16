@@ -111,33 +111,28 @@ public class UserAPI {
 				return Response.getJSONError("Ya estás loggueado", 400, res);
 			else 
 				session.invalidate();
-		
 		try {
 			UserController userController = new UserController();
 			JSONParser parser = new JSONParser();
-			
 			JSONObject json = (JSONObject) parser.parse(body);
-			User user = new User(json.get("account_number").toString(),
+			
+			if(json.get("email") == null || json.get("password") == null || json.get("school") == null || json.get("account") == null)
+				return Response.getJSONError("Correo y contraseña necesarios", 400, res);
+			
+			User user = new User(json.get("account").toString(),
 					json.get("name").toString(),
 					json.get("email").toString(),
 					json.get("password").toString(),
-					Integer.parseInt(json.get("school_id").toString())
+					Integer.parseInt(json.get("school").toString())
 					);
-			
 			try {
+				//Validar email
 				userController.insert(user);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
 				e.printStackTrace();
+				return Response.getJSONError(e.getMessage(), 400, res);
 			}
-			
-			if(json.get("email") == null || json.get("password") == null)
-				return Response.getJSONError("Correo y contraseña necesarios", 400, res);
-			
-			//User user = userController.login(json.get("email").toString(), json.get("password").toString());
-			
-			if(user == null) 
-				return Response.getJSONError("No hay usuario registrado con esa información", 404, res); 
 			
 			//Start session variables
 			session = req.getSession(true);

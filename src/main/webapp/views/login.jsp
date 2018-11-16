@@ -41,7 +41,7 @@ if(session.getAttribute("email") != null)
 						
 					</div>
 					<p class="has-text-grey">
-						No tienes cuenta <a href="../">¿Regístrate?</a> &nbsp;·&nbsp;
+						No tienes cuenta <a href="/repo.io/registro/">¿Regístrate?</a> &nbsp;·&nbsp;
 						<!-- <a href="../">Forgot Password</a> &nbsp;·&nbsp; -->
 						<!-- <a href="../">Need Help?</a> -->
 					</p>

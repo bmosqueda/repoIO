@@ -46,7 +46,7 @@
               </li> -->
 				<li>
 					<p class="has-text-light" href="#">
-						<i class="fa fa-envelope"></i> <span>&nbsp;admin@patrimoniosocial.org</span>
+						<i class="fa fa-envelope"></i> <span>&nbsp;bmosqueda@ucol.mx</span>
 					</p>
 				</li>
 				<br>

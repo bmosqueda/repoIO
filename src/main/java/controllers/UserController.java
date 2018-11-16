@@ -116,8 +116,17 @@ public class UserController extends General
         ResultSet resultSet = stament.executeQuery();
         boolean result = false;
         try {
+        	ResultSet generatedKeys = stament.getGeneratedKeys();
+        			if (generatedKeys.next()) {
+        				System.out.println(generatedKeys.getInt(1));
+                        user.setUser_id(generatedKeys.getInt(1));
+                    }
+                    else {
+                        return false;
+                    }
+			
 			if(resultSet.next()) {
-				result = true;
+				
 			  /*user = new User(ss
 			    resultSet.getInt("user_id"),
 			    resultSet.getString("account_number"),
@@ -131,12 +140,15 @@ public class UserController extends General
 				user = null;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			
+			System.out.println(e.getMessage());
 			e.printStackTrace();
+			return false;
+		} finally {
+	        resultSet.close();
+	        this.close();
 		}
-
-        resultSet.close();
-        this.close();
-		
+        
         return result;
 	}
 	

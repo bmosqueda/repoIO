@@ -85,6 +85,7 @@ if(session.getAttribute("email") != null)
             </div>
           </div>
           <p class="help feed is-danger" id="feed-confirmation">{{error.confirmation}}</p>
+          <p class="help feed is-danger" id="feed-confirmation">{{response}}</p>
 
         <button class="button is-info is-pulled-right" @click="signUp">Registrarme</button>
       </div>
