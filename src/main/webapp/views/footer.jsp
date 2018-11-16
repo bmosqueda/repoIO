@@ -1,12 +1,36 @@
-<footer class="footer has-background-info" style="padding-bottom: 4rem;">
-	<div class="content has-text-centered has-text-light">
-		<p>
-			<strong>Equipo 3</strong>
-		</p>
-		<span>Brandon Alejandro Mosqueda González</span><br> <span>Daniel
-			Salomón Marmolejo Contreras</span><br> <span>Rebeca Noelia
-			Flores Urtiz</span><br> <span>Isaac Ramírez Martínez </span><br>
-	</div>
-</footer>
+<div class="has-text-centered has-background-link">
+      <p 
+        class="footer-title has-text-light"
+        style="margin: auto;padding: 0px;">5° D
+      </p>
+      <p 
+        class="footer-title has-text-light" 
+        style="margin: auto;padding-bottom: : 15px;">Equipo 3</p>
 </body>
-<script src="/repo.io/public/js/vue.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+
+      // Add a click event on each of them
+      $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+
+          // Get the target from the "data-target" attribute
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+
+        });
+      });
+    }
+  });
+</script>
+</html>

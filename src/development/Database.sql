@@ -66,6 +66,7 @@
     account_number VARCHAR(10) NOT NULL,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
+    password VARCHAR(32) NOT NULL,
     -- Admin = 1, validotor = 2 and common = 3
     role INT NOT NULL DEFAULT 3,  
     school_id INT NOT NULL,

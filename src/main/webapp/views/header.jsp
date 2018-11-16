@@ -3,21 +3,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    //<link rel="icon" href="/public/images/Logos/transparent-ico.png">
+    
+    <!-- <link rel="icon" href="/public/images/Logos/transparent-ico.png"> -->
 
     <!-- Bulma -->
     <link rel="stylesheet" href="/repo.io/public/css/bulma.min.css">
-  	<title>Repo.IO</title>
+
+    <title><%= title %></title>
   </head>
   <body class="is-bold is-light">
     <!-- NavBar -->
-      <nav class="navbar is-white">
+      <nav class="navbar is-link ">
         <div class="navbar-brand">
           <a class="navbar-item" href="/">
-            <img class="logo-no-mobile" src="/public/images/Logos/logo-10.jpeg" alt="Patrimonio Social 2018 ©"  width="300" height="2000">
-            <figure class="logo-mobile image is-32x32 is-pulled-right text-mobile">
+            <img class="logo-no-mobile" src="/public/images/Logos/logo-10.jpeg" alt="Repo.IO"  width="300" height="2000">
+            <!-- <figure class="logo-mobile image is-32x32 is-pulled-right text-mobile">
               <img src="/public/images/Logos/transparent-ico.png" alt="Sociedad Patrimonial 2018 ©">
-          </figure>
+          </figure> -->
           </a>
           <div class="navbar-burger burger" data-target="navbar">
             <span></span>

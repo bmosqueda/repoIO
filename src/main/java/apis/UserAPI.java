@@ -36,7 +36,7 @@ public class UserAPI {
 			
 			if(user == null) 
 				return Response.getJSONError("Usuario con el id " + id + " no encontrado", 404, res);
-			
+			 
 			return user.toJSON();
 
 		} catch (ClassNotFoundException e) {
@@ -54,19 +54,44 @@ public class UserAPI {
 	@POST
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String usersJSON(@Context HttpServletRequest req, String body) {
+	public String usersJSON(@Context HttpServletRequest req, String body, @Context HttpServletResponse res) {
+		HttpSession session = req.getSession(false);
+		
+		if(session != null)
+			return Response.getJSONError("Ya estás loggueado", 400, res);
+		
 		try {
+			UserController userController = new UserController();
 			JSONParser parser = new JSONParser();
 			JSONObject json = (JSONObject) parser.parse(body);
-			json.put("Hola", "mundo");
+			if(json.get("email") == null || json.get("password") == null)
+				return Response.getJSONError("Correo y contraseña necesarios", 400, res);
 			
-			return json.toString();
+			User user = userController.login(json.get("email").toString(), json.get("password").toString());
+			
+			if(user == null) 
+				return Response.getJSONError("No hay usuario registrado con esa información", 404, res); 
+			
+			//Start session variables
+			session = req.getSession(true);
+	        session.setAttribute("user_id", user.getUser_id());
+	        session.setAttribute("role_id", user.getRole());
+	        session.setAttribute("school_id", user.getSchool_id());
+
+			return user.toJSON();
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return "Hola mundo";
+		
+		return Response.getJSONError("Error al iniciar sesión", 500, res);
 	}
 
 	// This method is called if XML is request

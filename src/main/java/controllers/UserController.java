@@ -1,5 +1,8 @@
 package controllers;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -68,12 +71,12 @@ public class UserController extends General
 				"  s.name AS 'school_name'\n" + 
 				"FROM users AS u\n" + 
 				"INNER JOIN schools AS s ON u.school_id = s.school_id\n" + 
-				"WHERE user_id = "+id;
+				"WHERE u.user_id = "+id;
 		
 		ArrayList<String[]> rows = this.getBySQL(sql);
-		System.out.println(rows);
+
 		int rowsCount = rows.size();
-		System.out.println("rowsCount: " + rowsCount);
+		
 		if(rowsCount < 2)
 			return null;
 		
@@ -87,5 +90,46 @@ public class UserController extends General
 					rows.get(1)[6]
 				);
 		
+	}
+	
+	public User login(String email, String password) throws ClassNotFoundException, SQLException
+	{
+		String sql = "SELECT \n" + 
+				"  u.account_number,\n" + 
+				"  u.email,\n" + 
+				"  u.name,\n" + 
+				"  u.role,\n" + 
+				"  u.school_id,\n" + 
+				"  u.user_id,\n" +
+				"  s.name AS 'school_name'\n" + 
+				"FROM users AS u\n" + 
+				"INNER JOIN schools AS s ON u.school_id = s.school_id\n" + 
+				"WHERE u.email = ? AND u.password = ?";
+		User user;
+		this.openConnection();
+	       
+        PreparedStatement stament = this.connector.prepareStatement(sql);
+        stament.setString(1, email);
+        stament.setString(2, password);
+        
+        ResultSet resultSet = stament.executeQuery();
+        
+        if(resultSet.next())
+        	  user = new User(
+        	    resultSet.getInt("user_id"),
+        	    resultSet.getString("account_number"),
+        	    resultSet.getString("name"),
+        	    resultSet.getString("email"),
+        	    resultSet.getInt("role"),
+        	    resultSet.getInt("school_id"),
+        	    resultSet.getString("school_name")
+        	);
+        else
+        	user = null;
+
+        resultSet.close();
+        this.close();
+		
+        return user;
 	}
 }
