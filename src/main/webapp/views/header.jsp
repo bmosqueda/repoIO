@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <!-- <link rel="icon" href="/public/images/Logos/transparent-ico.png"> -->
+    <link rel="stylesheet" href="/repo.io/public/fontawesome/css/all.min.css">
 
     <!-- Bulma -->
     <link rel="stylesheet" href="/repo.io/public/css/bulma.min.css">

@@ -25,6 +25,15 @@
 		<url-pattern>/iniciar-sesion/</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>search</servlet-name>
+		<jsp-file>/views/main.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>search</servlet-name>
+		<url-pattern>/buscar/</url-pattern>
+	</servlet-mapping>
+	
 	<!-- APIS -->
 	<servlet>
 		<servlet-name>Jersey REST Service</servlet-name>

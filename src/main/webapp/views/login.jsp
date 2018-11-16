@@ -1,3 +1,10 @@
+<% 
+//HttpSession session = request.getSession(false);
+if(session.getAttribute("email") != null)
+	response.sendRedirect("/repo.io/buscar/");
+
+out.println(session.getAttribute("email"));
+%>
 <html>
 <head>
 <meta charset="utf-8">
@@ -8,6 +15,8 @@
 
 <!-- Bulma -->
 <link rel="stylesheet" href="/repo.io/public/css/bulma.min.css">
+<link rel="stylesheet" href="/repo.io/public/fontawesome/css/all.min.css">
+
 
 <title>Inicio de sesión</title>
 </head>
@@ -15,7 +24,7 @@
 
 	<link rel="stylesheet" href="/repo.io/public/css/login.css">
 	<section class="hero is-success is-fullheight">
-		<div class="hero-body">
+		<div class="hero-body" id="app">
 			<div class="container has-text-centered">
 				<div class="column is-4 is-offset-4">
 					<h3 class="title has-text-grey">Inicio de sesión</h3>
@@ -24,17 +33,17 @@
 						<figure class="avatar">
 							<img src="/repo.io/public/images/login.png">
 						</figure>
-						<form>
+
 							<div class="field">
 								<div class="control">
 									<input class="input is-large" type="email"
-										placeholder="Correo electrónico" autofocus="">
+										placeholder="Correo electrónico" v-model="email" autofocus="">
 								</div>
 							</div>
 
 							<div class="field">
 								<div class="control">
-									<input class="input is-large" type="password"
+									<input class="input is-large" type="password" v-model="password"
 										placeholder="Contraseña">
 								</div>
 							</div>
@@ -43,9 +52,10 @@
 									Recordarme
 								</label>
 							</div>
-							<button class="button is-block is-info is-large is-fullwidth">Iniciar
+							<p class="help feed is-danger">{{error}}</p>
+							<button class="button is-block is-info is-large is-fullwidth" @click="login">Iniciar
 								sesión</button>
-						</form>
+						
 					</div>
 					<p class="has-text-grey">
 						No tienes cuenta <a href="../">¿Regístrate?</a> &nbsp;·&nbsp;
