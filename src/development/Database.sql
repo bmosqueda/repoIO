@@ -12,9 +12,9 @@
     INSERT INTO schools (name) VALUES('Facultad de medicina');
     
   -- Users
-    INSERT INTO users (name, account_number, email, role, school_id) VALUES('Brandon Mosqueda', '20145969', 'bmosqueda@ucol.mx', 1, 1);
-    INSERT INTO users (name, account_number, email, role, school_id) VALUES('Charley Jaculina', '10821935', 'plumiform@ucol.mx', 3, 1);
-    INSERT INTO users (name, account_number, email, role, school_id) VALUES('Tia Bonhomme', '62613759', 'tbonhome@ucol.mx', 3, 1);
+    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Brandon Mosqueda', '20145969', 'bmosqueda@ucol.mx', "hola", 1, 1);
+    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Charley Jaculina', '10821935', 'plumiform@ucol.mx', "hola", 3, 1);
+    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Tia Bonhomme', '62613759', 'tbonhome@ucol.mx', "hola", 3, 1);
 
   -- Authors
     INSERT INTO authors (name, alias, country_of_birth) VALUES('Zona Scharmann', 'Z. Scharmann', 'Philippines');
