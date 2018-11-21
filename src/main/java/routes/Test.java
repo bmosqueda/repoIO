@@ -38,7 +38,7 @@ public class Test extends HttpServlet {
 
 			for(int i = 0; i < userCount; i++)
 			{
-				out.println(users[i].toHTML());
+				out.println(users[i].toString());
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

@@ -4,29 +4,11 @@
   Password: repoIoPass
   Repo: https://github.com/bmosqueda/repoIO.git
 
--- Seeds
-  -- Schools
-    INSERT INTO schools (name) VALUES('Facultad de telemática');
-    INSERT INTO schools (name) VALUES('Facultad de contabilidad');
-    INSERT INTO schools (name) VALUES('Facultad de derecho');
-    INSERT INTO schools (name) VALUES('Facultad de medicina');
-    
-  -- Users
-    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Brandon Mosqueda', '20145969', 'bmosqueda@ucol.mx', "hola", 1, 1);
-    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Charley Jaculina', '10821935', 'plumiform@ucol.mx', "hola", 3, 1);
-    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Tia Bonhomme', '62613759', 'tbonhome@ucol.mx', "hola", 3, 1);
-
-  -- Authors
-    INSERT INTO authors (name, alias, country_of_birth) VALUES('Zona Scharmann', 'Z. Scharmann', 'Philippines');
-    INSERT INTO authors (name, alias, country_of_birth) VALUES('Etha Nikolai', 'E. Nikolai', 'Nicaragua');
-    INSERT INTO authors (name, alias, country_of_birth) VALUES('Simon Munks', 'S. Munks', 'South Sudan');
-
-
 -- Create table:    DROP DATABASE repoIo;
   CREATE DATABASE repoIo;
-
--- Grants
-  GRANT ALL PRIVILEGES ON repoIo.* TO repoIo@localhost;
+  
+-- Use database
+  USE repoIo;
 
 -- Catalogs
   CREATE TABLE schools(
@@ -45,8 +27,11 @@
   */
   CREATE TABLE keywords(
     keyword_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    Keyword VARCHAR(50) NOT NULL
+    Keyword VARCHAR(50) NOT NULL,
+    CONSTRAINT Keyword_unique UNIQUE (Keyword)
   );
+
+  CREATE INDEX keyword_index ON keywords(keyword);
 
   CREATE TABLE areas(
     area_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -55,7 +40,7 @@
 
   CREATE TABLE authors(
     author_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(250) NOT NULL,
+    name VARCHAR(150) NOT NULL,
     alias VARCHAR(100),
     country_of_birth VARCHAR(100) NOT NULL
   );
@@ -70,6 +55,7 @@
     -- Admin = 1, validotor = 2 and common = 3
     role INT NOT NULL DEFAULT 3,  
     school_id INT NOT NULL,
+    image VARCHAR(2083) DEFAULT '/repo.io/public/images/login.png',
     CONSTRAINT email_unique UNIQUE (email),
     CONSTRAINT school_reference_users 
       FOREIGN KEY (school_id)
@@ -81,6 +67,7 @@
     creator_id INT NOT NULL,
     name VARCHAR(300) NOT NULL,
     url VARCHAR(400) NOT NULL,
+    tags VARCHAR(300) NOT NULL,
     CONSTRAINT creator_reference_repositories
       FOREIGN KEY (creator_id)
       REFERENCES users(user_id)
@@ -88,7 +75,7 @@
 
   CREATE TABLE resources(
     resource_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(300) NOT NULL,
+    title VARCHAR(250) NOT NULL,
     description TEXT,
     -- in MB
     size INT NOT NULL,
@@ -131,10 +118,10 @@
     area_id INT NOT NULL,
     resource_id INT NOT NULL,
     CONSTRAINT area_reference_areas_resource 
-      area_FOREIGN KEY (area_id)
+      FOREIGN KEY areas(area_id)
       REFERENCES areas(area_id),
     CONSTRAINT resource_reference_areas_resource
-      area_FOREIGN KEY (resource_id)
+      FOREIGN KEY resources(resource_id)
       REFERENCES resources(resource_id),
     PRIMARY KEY (area_id, resource_id)
   );
@@ -162,3 +149,24 @@
       REFERENCES resources(resource_id),
     PRIMARY KEY (repository_id, resource_id)
   );
+
+
+-- Seeds
+  -- Schools
+    INSERT INTO schools (name) VALUES('Facultad de telemática');
+    INSERT INTO schools (name) VALUES('Facultad de contabilidad');
+    INSERT INTO schools (name) VALUES('Facultad de derecho');
+    INSERT INTO schools (name) VALUES('Facultad de medicina');
+    
+  -- Users
+    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Brandon Mosqueda', '20145969', 'bmosqueda@ucol.mx', "hola", 1, 1);
+    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Charley Jaculina', '10821935', 'plumiform@ucol.mx', "hola", 3, 1);
+    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Tia Bonhomme', '62613759', 'tbonhome@ucol.mx', "hola", 3, 1);
+
+  -- Authors
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Zona Scharmann', 'Z. Scharmann', 'Philippines');
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Etha Nikolai', 'E. Nikolai', 'Nicaragua');
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Simon Munks', 'S. Munks', 'South Sudan');
+
+-- Grants
+  GRANT ALL PRIVILEGES ON repoIo.* TO repoIo@localhost;

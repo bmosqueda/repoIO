@@ -2,194 +2,180 @@ package controllers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.json.simple.JSONArray;
-
 import models.User;
 
-public class UserController extends General
-{
-	private User user;
-	
-	public UserController(User user) throws ClassNotFoundException
-	{
+public class UserController extends Controller
+{		
+	public UserController() {
 		super();
-		this.user = user;
-	}
-	
-	public UserController() throws ClassNotFoundException
-	{
-		super();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public String usersToJSON(User users[])
-	{
-		JSONArray json = new JSONArray();
-		
-		for (User user : users) {
-			json.add(user.toJSONObject());
-		}
-		
-		return json.toString();
 	}
 	
 	public User[] getAll() throws ClassNotFoundException, SQLException
 	{
-		String sql = "SELECT * FROM users";
-		ArrayList<String[]> rows = this.getBySQL(sql);
-		int rowsCount = rows.size();
-		User users[] = new User[rowsCount - 1];
+		this.open();
 		
-		for(int i = 1; i < rowsCount; i++)
-		{
-			users[i - 1] = new User(
-					Integer.parseInt(rows.get(i)[0]), 
-					rows.get(i)[1], 
-					rows.get(i)[2], 
-					rows.get(i)[3],
-					Integer.parseInt(rows.get(i)[4]), 
-					Integer.parseInt(rows.get(i)[5]) 
-				);
-		}
+		String sql = "SELECT "+User.fields_without_password
+				+ ", s.name FROM users AS u "
+				+ "INNER JOIN schools AS s ON u.school_id = s.school_id";
 		
-		return users;
+		PreparedStatement stament = this.connector.prepareStatement(sql);
+        ResultSet resultSet = stament.executeQuery();
+        ArrayList<User> users = new ArrayList<User>();
+        
+        while (resultSet.next()) 
+        	users.add(new User(
+        				resultSet.getInt(1),
+        				resultSet.getString(2),
+        				resultSet.getString(3),
+        				resultSet.getString(4),
+        				resultSet.getInt(5),
+        				resultSet.getInt(6),
+        				resultSet.getString(7),
+        				resultSet.getString(8)
+        			));
+        
+        resultSet.close();
+        this.close();
+        
+		return (User[]) users.toArray();
 	}
 	
-	public User getAllInfoById(int id) throws ClassNotFoundException, SQLException
+	public User getById(int id) throws ClassNotFoundException, SQLException
 	{
-		String sql = "SELECT \n" + 
-				"  u.account_number,\n" + 
-				"  u.email,\n" + 
-				"  u.name,\n" + 
-				"  u.role,\n" + 
-				"  u.school_id,\n" + 
-				"  u.user_id,\n" +
-				"  s.name AS 'school_name'\n" + 
-				"FROM users AS u\n" + 
-				"INNER JOIN schools AS s ON u.school_id = s.school_id\n" + 
-				"WHERE u.user_id = "+id;
+		this.open();
 		
-		ArrayList<String[]> rows = this.getBySQL(sql);
-
-		int rowsCount = rows.size();
+		String sql = "SELECT " + User.fields_without_password
+				+ ", s.name FROM users AS u "
+				+ "INNER JOIN schools AS s ON u.school_id = s.school_id WHERE u.user_id = "+id;
 		
-		if(rowsCount < 2)
-			return null;
-		
-			return new User(
-					Integer.parseInt(rows.get(1)[0]), 
-					rows.get(1)[1], 
-					rows.get(1)[2], 
-					rows.get(1)[3],
-					Integer.parseInt(rows.get(1)[4]), 
-					Integer.parseInt(rows.get(1)[5]),
-					rows.get(1)[6]
-				);
-		
+		PreparedStatement stament = this.connector.prepareStatement(sql);
+        ResultSet resultSet = stament.executeQuery();
+        User user = null;
+        
+        if(resultSet.next()) 
+        	user = new User(
+        				resultSet.getInt(1),
+        				resultSet.getString(2),
+        				resultSet.getString(3),
+        				resultSet.getString(4),
+        				resultSet.getInt(5),
+        				resultSet.getInt(6),
+        				resultSet.getString(7),
+        				resultSet.getString(8)
+        			);
+        
+        resultSet.close();
+        this.close();
+        
+		return user;
 	}
 	
-	public boolean insert(User user) throws SQLException {
-		String sql = "INSERT INTO users (name, account_number, email, password, role, school_id) VALUES(?, ?, ?, ?, ?, ?)";
+	public boolean existsByAccount(String account) throws ClassNotFoundException, SQLException
+	{
+		this.open();
 		
-		try {
-			this.openConnection();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		String sql = "SELECT COUNT(*) AS exists FROM users WHERE account_number = ?";
+		
+		PreparedStatement stament = this.connector.prepareStatement(sql);
+        stament.setString(1, account);
+        ResultSet resultSet = stament.executeQuery(sql);
+        boolean exists = false;
+
+        if(resultSet.next()) 
+        	exists = resultSet.getInt("exists") > 0;
+
+        resultSet.close();
+        this.close();
+
+        return exists;
+	}
+	
+	public boolean existsByEmail(String email) throws ClassNotFoundException, SQLException
+	{
+		this.open();
+		
+		String sql = "SELECT COUNT(*) AS exists FROM users WHERE email = ?";
+		
+		PreparedStatement stament = this.connector.prepareStatement(sql);
+        stament.setString(1, email);
+        ResultSet resultSet = stament.executeQuery(sql);
+        boolean exists = false;
+
+        if(resultSet.next()) 
+        	exists = resultSet.getInt("exists") > 0;
+
+        resultSet.close();
+        this.close();
+
+        return exists;
+	}
+	
+	public boolean create(User user) throws SQLException, ClassNotFoundException {
+		String sql = "INSERT INTO users (account_number, name, email, password, role, school_id, image) VALUES(?, ?, ?, ?, ?, ?, ?)";
+		
+		this.open();
 	       
         PreparedStatement stament = this.connector.prepareStatement(sql);
-        stament.setString(1, user.getName());
-        stament.setString(2, user.getAccount_number());
+        stament.setString(1, user.getAccount_number());
+        stament.setString(2, user.getName());
         stament.setString(3, user.getEmail());
         stament.setString(4, user.getPassword());
         stament.setInt(5, user.getRole());
         stament.setInt(6, user.getSchool_id());
+        stament.setString(7, user.getImage());
         
-        ResultSet resultSet = stament.executeQuery();
+        stament.executeQuery();
+        ResultSet generatedKeys = stament.getGeneratedKeys();
+        
         boolean result = false;
-        try {
-        	ResultSet generatedKeys = stament.getGeneratedKeys();
-        			if (generatedKeys.next()) {
-        				System.out.println(generatedKeys.getInt(1));
-                        user.setUser_id(generatedKeys.getInt(1));
-                    }
-                    else {
-                        return false;
-                    }
-			
-			if(resultSet.next()) {
-				
-			  /*user = new User(ss
-			    resultSet.getInt("user_id"),
-			    resultSet.getString("account_number"),
-			    resultSet.getString("name"),
-			    resultSet.getString("email"),
-			    resultSet.getInt("role"),
-			    resultSet.getInt("school_id")
-					  );*/
-			}
-			else
-				user = null;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			return false;
-		} finally {
-	        resultSet.close();
-	        this.close();
-		}
+        
+        if(generatedKeys.next()) {
+        	user.setUser_id(generatedKeys.getInt(1));
+        	result = true;
+        }
+        
+        generatedKeys.close();
+        this.close();
         
         return result;
 	}
 	
-	public User login(String email, String password) throws ClassNotFoundException, SQLException
+	public User login(String emailOrAccount, String password) throws ClassNotFoundException, SQLException
 	{
-		String sql = "SELECT \n" + 
-				"  u.account_number,\n" + 
-				"  u.email,\n" + 
-				"  u.name,\n" + 
-				"  u.role,\n" + 
-				"  u.school_id,\n" + 
-				"  u.user_id,\n" +
-				"  s.name AS 'school_name'\n" + 
-				"FROM users AS u\n" + 
-				"INNER JOIN schools AS s ON u.school_id = s.school_id\n" + 
-				"WHERE u.email = ? AND u.password = ?";
-		User user;
-		this.openConnection();
-	       
-        PreparedStatement stament = this.connector.prepareStatement(sql);
-        stament.setString(1, email);
+		this.open();
+		
+		boolean isAccount = this.isInt(emailOrAccount);
+		
+		String sql = "SELECT "+User.fields_without_password
+				+ ", s.name FROM users AS u "
+				+ "INNER JOIN schools AS s ON u.school_id = s.school_id WHERE "+ (isAccount ? "u.account_number = ?" : "u.email = ?")
+				+ " AND password = ?";
+		
+		PreparedStatement stament = this.connector.prepareStatement(sql);
+        stament.setString(1, emailOrAccount);
         stament.setString(2, password);
         
         ResultSet resultSet = stament.executeQuery();
+        User user = null;
         
-        if(resultSet.next())
-        	  user = new User(
-        	    resultSet.getInt("user_id"),
-        	    resultSet.getString("account_number"),
-        	    resultSet.getString("name"),
-        	    resultSet.getString("email"),
-        	    resultSet.getInt("role"),
-        	    resultSet.getInt("school_id"),
-        	    resultSet.getString("school_name")
-        	);
-        else
-        	user = null;
-
+        if(resultSet.next()) 
+        	user = new User(
+        				resultSet.getInt(1),
+        				resultSet.getString(2),
+        				resultSet.getString(3),
+        				resultSet.getString(4),
+        				resultSet.getInt(5),
+        				resultSet.getInt(6),
+        				resultSet.getString(7),
+        				resultSet.getString(8)
+        			);
+        
         resultSet.close();
         this.close();
-		
-        return user;
+        
+		return user;
 	}
 }

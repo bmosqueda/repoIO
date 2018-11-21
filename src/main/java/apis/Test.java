@@ -37,7 +37,7 @@ public class Test {
     try {
 		UserController controller = new UserController();
 		
-		return controller.usersToJSON(controller.getAll());
+		return controller.arrayToJSON(controller.getAll());
 	} catch (ClassNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
