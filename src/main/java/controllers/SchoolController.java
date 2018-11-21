@@ -5,10 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.json.simple.JSONArray;
-
 import models.School;
-import models.User;
 
 public class SchoolController extends Controller {
 	public SchoolController() {
