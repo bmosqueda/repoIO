@@ -1,5 +1,7 @@
 package controllers;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -8,60 +10,69 @@ import org.json.simple.JSONArray;
 import models.School;
 import models.User;
 
-public class SchoolController extends General {
-	private School school;
-
-	public SchoolController(School school) {
-		super();
-		this.school = school;
-	}
-	
+public class SchoolController extends Controller {
 	public SchoolController() {
 		super();
 	}
-	
-	@SuppressWarnings("unchecked")
-	public String schoolsToJSON(School schools[])
-	{
-		JSONArray json = new JSONArray();
-		
-		for (School school : schools) {
-			json.add(school.toJSONObject());
+
+	public School[] getAll() throws ClassNotFoundException, SQLException {
+		this.open();
+
+		String sql = "SELECT * FROM schools";
+
+		PreparedStatement stament = this.connector.prepareStatement(sql);
+		ResultSet resultSet = stament.executeQuery();
+		ArrayList<School> schools = new ArrayList<School>();
+
+		while (resultSet.next())
+			schools.add(new School(resultSet.getInt(1), resultSet.getString(2)));
+
+		resultSet.close();
+		this.close();
+
+		return (School[]) schools.toArray(new School[schools.size()]);
+	}
+
+	public School getById(int id) throws ClassNotFoundException, SQLException {
+		this.open();
+
+		String sql = "SELECT * FROM schools WHERE school_id = " + id;
+
+		PreparedStatement stament = this.connector.prepareStatement(sql);
+		ResultSet resultSet = stament.executeQuery();
+		School school = null;
+
+		if (resultSet.next())
+			school = new School(resultSet.getInt(1), resultSet.getString(2));
+
+		resultSet.close();
+		this.close();
+
+		return school;
+	}
+
+	public boolean create(School school) throws SQLException, ClassNotFoundException {
+		String sql = "INSERT INTO schools (name) VALUES(?)";
+
+		this.open();
+
+		PreparedStatement stament = this.connector.prepareStatement(sql);
+		stament.setString(1, school.getName());
+
+		stament.executeQuery();
+		ResultSet generatedKeys = stament.getGeneratedKeys();
+
+		boolean result = false;
+
+		if (generatedKeys.next()) {
+			school.setSchool_id(generatedKeys.getInt(1));
+			result = true;
 		}
-		
-		return json.toString();
+
+		generatedKeys.close();
+		this.close();
+
+		return result;
 	}
-	
-	public School[] getAll() throws ClassNotFoundException, SQLException
-	{
-	  String sql = "SELECT * FROM schools";
-	  ArrayList<String[]> rows = this.getBySQL(sql);
-	  int rowsCount = rows.size();
-	  School schools[] = new School[rowsCount - 1];
-	  
-	  for(int i = 1; i < rowsCount; i++)
-	  {
-	    schools[i - 1] = new School(
-	        Integer.parseInt(rows.get(i)[0]), 
-	        rows.get(i)[1]
-	      );
-	  }
-	  
-	  return schools;
-	}
-	
-	public School getById(int id) throws ClassNotFoundException, SQLException
-	{
-	  String sql = "SELECT * FROM schools WHERE school_id = " + id;
-	  
-	  ArrayList<String[]> rows = this.getBySQL(sql);
-	  int rowsCount = rows.size();
-	  if(rowsCount < 2)
-	    return null;
-	  
-	  return new School(
-	    Integer.parseInt(rows.get(1)[0]), 
-	    rows.get(1)[1]
-	  );
-	}
+
 }

@@ -2,7 +2,8 @@ package models;
 
 import org.json.simple.JSONObject;
 
-public class School {
+public class School extends Model
+{
 	private int school_id;
 	private String name;
 	
@@ -18,8 +19,10 @@ public class School {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public String toJSON() {
 		JSONObject json = new JSONObject();
+		
 		json.put("school_id", this.school_id);
 		json.put("name", this.name);
 		
@@ -27,8 +30,10 @@ public class School {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public JSONObject toJSONObject() {
 		JSONObject json = new JSONObject();
+		
 		json.put("school_id", this.school_id);
 		json.put("name", this.name);
 		

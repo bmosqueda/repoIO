@@ -40,7 +40,7 @@ public class UserController extends Controller
         resultSet.close();
         this.close();
         
-		return (User[]) users.toArray();
+		return (User[]) users.toArray(new User[users.size()]);
 	}
 	
 	public User getById(int id) throws ClassNotFoundException, SQLException

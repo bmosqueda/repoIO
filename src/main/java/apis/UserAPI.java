@@ -18,13 +18,29 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import controllers.UserController;
+import models.School;
 import models.User;
 
 @Path("/users")
 public class UserAPI {
 	private UserController userController = new UserController();
 	private JSONParser parser = new JSONParser();
+	
+	@GET
+	@Path("/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAll(@Context HttpServletRequest req, @Context HttpServletResponse res)
+			throws ClassNotFoundException {
+		try {
+			User users[];
+			users = this.userController.getAll();
 
+			return this.userController.arrayToJSON(users);
+		} catch (SQLException e) {
+			return Response.getJSONError("Error al busca la Escuela", 500, res);
+		}
+	}
+	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
