@@ -16,6 +16,7 @@ apis/Test.class
 controllers/ResourceController.class
 apis/SchoolAPI.class
 models/Category.class
+apis/RepositoryAPI.class
 controllers/General.class
 apis/AreaAPI.class
 apis/Response.class

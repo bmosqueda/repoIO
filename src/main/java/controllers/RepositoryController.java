@@ -126,7 +126,7 @@ public class RepositoryController extends Controller {
 	    		"INNER JOIN users AS u \n" + 
 	    		"  ON rep.creator_id = u.user_id \n" + 
 	    		"WHERE ar.area_id = "+id + 
-	    		"GROUP BY rep.repository_id";
+	    		" GROUP BY rep.repository_id";
 
 	    PreparedStatement stament = this.connector.prepareStatement(sql);
 	    ResultSet resultSet = stament.executeQuery();
@@ -156,7 +156,7 @@ public class RepositoryController extends Controller {
 	    for (String str : keys) 
 			where += "keyword = '"+this.escapeString(str) +"' OR ";
 		
-	    where.substring(0, where.length() - 4);
+	    where = where.substring(0, where.length() - 4);
 	    /*
 		      SELECT r.*, u.name 
               FROM (
