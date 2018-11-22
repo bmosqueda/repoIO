@@ -73,6 +73,7 @@
       REFERENCES users(user_id)
   );
 
+
   CREATE TABLE resources(
     resource_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(250) NOT NULL,
@@ -81,7 +82,8 @@
     size INT NOT NULL,
     -- The resources only can belong to one repository
     repository_id INT NOT NULL,
-    type ENUM('video', 'audio', 'book', 'document', 'other') NOT NULL,
+    -- type ENUM('video', 'audio', 'book', 'document', 'other') NOT NULL,
+    type INT DEFAULT 5 COMMENT 'video, audio, book, document, other',
     url VARCHAR(400) NOT NULL,
     CONSTRAINT repository_reference_resources
       FOREIGN KEY (repository_id)
@@ -167,6 +169,37 @@
     INSERT INTO authors (name, alias, country_of_birth) VALUES('Zona Scharmann', 'Z. Scharmann', 'Philippines');
     INSERT INTO authors (name, alias, country_of_birth) VALUES('Etha Nikolai', 'E. Nikolai', 'Nicaragua');
     INSERT INTO authors (name, alias, country_of_birth) VALUES('Simon Munks', 'S. Munks', 'South Sudan');
+
+  -- Repositories
+    INSERT INTO repositories (creator_id, name, url, tags) VALUES (1, 'El repo', 'url', 'los, tags, chidos');
+    INSERT INTO repositories (creator_id, name, url, tags) VALUES (1, 'El repo 2', 'url 2', 'los, tags, chidos 2');
+
+  -- Resources
+    INSERT INTO resources (title, description, size, repository_id, type, url) VALUES ('Recurso 1', 'description', 4, 1, 1, 'url');
+
+  -- Categories Repository
+    INSERT INTO categories_repository (repository_id, category_id) VALUES (2, 2);
+
+  -- Area
+    INSERT INTO areas (name) VALUES('Area chida');
+    INSERT INTO areas (name) VALUES('Area chida 2');
+
+  -- Areas Resource
+    INSERT INTO areas_resource (resource_id, area_id) VALUES (1, 1);
+    INSERT INTO areas_resource (resource_id, area_id) VALUES (1, 2);
+
+    INSERT INTO areas_resource (resource_id, area_id) VALUES (2, 2);
+    INSERT INTO areas_resource (resource_id, area_id) VALUES (2, 1);
+
+  -- Keywords
+    INSERT INTO keywords (keyword) VALUES('hola');
+    INSERT INTO keywords (keyword) VALUES('mundo');
+    INSERT INTO keywords (keyword) VALUES('otro');
+
+  -- Keyword repository
+    INSERT INTO repositories_with_keyword (repository_id, keyword_id) VALUES (1, 1);
+    INSERT INTO repositories_with_keyword (repository_id, keyword_id) VALUES (1, 2);
+    INSERT INTO repositories_with_keyword (repository_id, keyword_id) VALUES (2, 1);
 
 -- Grants
   GRANT ALL PRIVILEGES ON repoIo.* TO repoIo@localhost;

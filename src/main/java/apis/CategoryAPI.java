@@ -35,7 +35,7 @@ public class CategoryAPI {
 
       return this.categoryController.arrayToJSON(categories);
     } catch (SQLException e) {
-      return Response.getJSONError("Error al busca la categoría", 500, res);
+      return Response.getJSONError(e.getMessage(), 500, res);
     }
   }
 
