@@ -92,3 +92,5 @@ if(session.getAttribute("email") != null)
     </div>
 <%@ include file="footer.jsp"%>
 <script src="/repo.io/public/js/sign-up.js"></script>
+</body>
+</html>

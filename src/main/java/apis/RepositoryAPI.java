@@ -32,7 +32,6 @@ public class RepositoryAPI {
 		try {
 			Repository repositories[];
 			repositories = this.repositoryController.getAll();
-
 			return this.repositoryController.arrayToJSON(repositories);
 		} catch (SQLException e) {
 			return Response.getJSONError(e.getMessage(), 500, res);
@@ -100,7 +99,7 @@ public class RepositoryAPI {
 		}
 	}
 
-	@POST
+	@GET
 	@Path("/keyword")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getByCreator(@Context HttpServletRequest req, String body, @Context HttpServletResponse res)
@@ -133,7 +132,33 @@ public class RepositoryAPI {
 			return Response.getJSONError(e.getMessage(), 500, res);
 		}
 	}
+	
+	@GET
+	@Path("/title")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getByTitle(@Context HttpServletRequest req, String body, @Context HttpServletResponse res)
+			throws ClassNotFoundException {
+		HttpSession session = req.getSession(false);
 
+		if (session != null)
+			if (session.getAttribute("email") == null)
+				return Response.getJSONError("Necesitas iniciar sesión", 400, res);
+
+		String title = req.getParameter("title");
+		
+		if (title == null || title.equals(""))
+			return Response.getJSONError("Parámetros incompletos para buscar por título", 400, res);
+
+		try {
+			Repository repositories[];
+			repositories = this.repositoryController.getAllByTitle(title);
+
+			return this.repositoryController.arrayToJSON(repositories);
+		} catch (SQLException e) {
+			return Response.getJSONError(e.getMessage(), 500, res);
+		}
+	}
+	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)

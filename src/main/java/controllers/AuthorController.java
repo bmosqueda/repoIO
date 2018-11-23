@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import models.Author;
+import models.Repository;
 
 public class AuthorController extends Controller {
   public AuthorController() {
@@ -83,5 +84,28 @@ public class AuthorController extends Controller {
 
     return result;
   }
+  
+  public Author[] getAllByNameOrAlias(String name) throws ClassNotFoundException, SQLException {
+	    this.open();	
+	    name = this.escapeString(name);
+	    String sql = "SELECT * FROM authors WHERE name LIKE '%"+name+"%' OR alias LIKE '%"+name+"%'";
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+	    ResultSet resultSet = stament.executeQuery();
+	    ArrayList<Author> authors = new ArrayList<Author>();
+
+	    while (resultSet.next())
+	      authors.add(new Author(
+	        resultSet.getInt(1), 
+	        resultSet.getString(2),
+	        resultSet.getString(3),
+	        resultSet.getString(4)
+	      ));
+
+	    resultSet.close();
+	    this.close();
+
+	    return (Author[]) authors.toArray(new Author[authors.size()]);
+	  }
 
 }

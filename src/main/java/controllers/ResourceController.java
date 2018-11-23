@@ -118,4 +118,52 @@ public class ResourceController extends Controller {
 
     return result;
   }
+  
+  public boolean insertAreaResource(int resource_id, int area_id) throws SQLException, ClassNotFoundException {
+	    String sql = "INSERT INTO areas_resource (resource_id, area_id) VALUES (?, ?)";
+
+	    this.open();
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+	    stament.setInt(1, resource_id);
+	    stament.setInt(2, area_id);
+	    
+	    stament.executeQuery();
+	    ResultSet generatedKeys = stament.getGeneratedKeys();
+
+	    boolean result = false;
+
+	    if (generatedKeys.next()) 
+	      result = true;
+	    
+
+	    generatedKeys.close();
+	    this.close();
+
+	    return result;
+	  }
+  
+  public boolean insertAuthorResource(int resource_id, int author_id) throws SQLException, ClassNotFoundException {
+	    String sql = "INSERT INTO authors_resource (resource_id, author_id) VALUES (?, ?)";
+
+	    this.open();
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+	    stament.setInt(1, resource_id);
+	    stament.setInt(2, author_id);
+	    
+	    stament.executeQuery();
+	    ResultSet generatedKeys = stament.getGeneratedKeys();
+
+	    boolean result = false;
+
+	    if (generatedKeys.next()) 
+	      result = true;
+	    
+
+	    generatedKeys.close();
+	    this.close();
+
+	    return result;
+	  }
 }

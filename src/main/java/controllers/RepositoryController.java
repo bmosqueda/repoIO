@@ -102,6 +102,31 @@ public class RepositoryController extends Controller {
 	    return (Repository[]) repositories.toArray(new Repository[repositories.size()]);
 	  }
   
+  public Repository[] getAllByTitle(String title) throws ClassNotFoundException, SQLException {
+	    this.open();	
+	    
+	    String sql = "SELECT r.*, u.name FROM repositories AS r INNER JOIN users AS u ON r.creator_id = u.user_id WHERE r.name LIKE '%"+this.escapeString(title)+"%'";
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+	    ResultSet resultSet = stament.executeQuery();
+	    ArrayList<Repository> repositories = new ArrayList<Repository>();
+
+	    while (resultSet.next())
+	      repositories.add(new Repository(
+	        resultSet.getInt(1), 
+	        resultSet.getInt(2), 
+	        resultSet.getString(3),
+	        resultSet.getString(4),
+	        resultSet.getString(5),
+	        resultSet.getString(6)
+	      ));
+
+	    resultSet.close();
+	    this.close();
+
+	    return (Repository[]) repositories.toArray(new Repository[repositories.size()]);
+	  }
+  
   public Repository[] getAllByArea(int id) throws ClassNotFoundException, SQLException {
 	    this.open();
 	    
@@ -258,4 +283,49 @@ public class RepositoryController extends Controller {
     return result;
   }
 
+  public boolean insertCategoryRepository(int repository_id, int category_id) throws SQLException, ClassNotFoundException {
+	  String sql = "INSERT INTO categories_repository (repository_id, category_id) VALUES (?, ?)";
+
+	    this.open();
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+	    stament.setInt(1, repository_id);
+	    stament.setInt(2, category_id);
+
+	    stament.executeQuery();
+	    ResultSet generatedKeys = stament.getGeneratedKeys();
+
+	    boolean result = false;
+
+	    if (generatedKeys.next()) 
+	      result = true;
+
+	    generatedKeys.close();
+	    this.close();
+
+	    return result;
+	  }
+  
+  public boolean insertKeywordRepository(int repository_id, int keyword_id) throws SQLException, ClassNotFoundException {
+	  String sql = "INSERT INTO repositories_with_keyword (repository_id, keyword_id) VALUES (?, ?)";
+
+	    this.open();
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+	    stament.setInt(1, repository_id);
+	    stament.setInt(2, keyword_id);
+
+	    stament.executeQuery();
+	    ResultSet generatedKeys = stament.getGeneratedKeys();
+
+	    boolean result = false;
+
+	    if (generatedKeys.next()) 
+	      result = true;
+
+	    generatedKeys.close();
+	    this.close();
+
+	    return result;
+	  }
 }

@@ -51,3 +51,5 @@ if(session.getAttribute("email") != null)
 	</section>
 	<%@ include file="footer.jsp"%>
 <script src="/repo.io/public/js/login.js"></script>
+</body>
+</html>

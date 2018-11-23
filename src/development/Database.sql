@@ -66,13 +66,12 @@
     repository_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     creator_id INT NOT NULL,
     name VARCHAR(300) NOT NULL,
-    url VARCHAR(400) NOT NULL,
+    url VARCHAR(2083) NOT NULL,
     tags VARCHAR(300) NOT NULL,
     CONSTRAINT creator_reference_repositories
       FOREIGN KEY (creator_id)
       REFERENCES users(user_id)
   );
-
 
   CREATE TABLE resources(
     resource_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -139,19 +138,6 @@
       REFERENCES resources(resource_id),
     PRIMARY KEY (author_id, resource_id)
   );
-
-  CREATE TABLE resources_repository(
-    repository_id INT NOT NULL,
-    resource_id INT NOT NULL,
-    CONSTRAINT repository_reference_resources_repository 
-      FOREIGN KEY (repository_id)
-      REFERENCES repositories(repository_id),
-    CONSTRAINT resource_reference_resources_repository 
-      FOREIGN KEY (resource_id)
-      REFERENCES resources(resource_id),
-    PRIMARY KEY (repository_id, resource_id)
-  );
-
 
 -- Seeds
   -- Schools
