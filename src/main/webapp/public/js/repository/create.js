@@ -84,7 +84,7 @@ const vue = new Vue({
       }
 
       let tempResource = {
-        name: this.resource.name,
+        title: this.resource.name,
         description: this.resource.description,
         size: this.resource.size,
         type: this.resource.type,

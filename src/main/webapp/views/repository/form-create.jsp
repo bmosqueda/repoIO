@@ -140,7 +140,7 @@
                 <div class="card">
                   <header class="card-header">
                     <p class="card-header-title">
-                      {{res.name}}
+                      {{res.title}}
                     </p>
                     <a class="card-header-icon" aria-label="more options">
                       <span class="icon" @click="res.visible = !res.visible">

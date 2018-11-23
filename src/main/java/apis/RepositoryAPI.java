@@ -231,9 +231,8 @@ public class RepositoryAPI {
 		int categoriesCount = categories.size();
 		for(int i = 0; i < categoriesCount; i++)
 		{
-			System.out.println(categories.get(i));
-			Integer catId = Integer.parseInt(categories.get(i).toString());
-			System.out.println("CatId: " + catId);
+			Object catId = categories.get(i);
+
 			if(catId == null)
 				continue;
 			else if(!this.repositoryController.isInt(catId.toString()))
@@ -266,7 +265,7 @@ public class RepositoryAPI {
 			Object size = resTemp.get("size");
 			Object type = resTemp.get("type");
 			Object urlRes = resTemp.get("url");
-			
+			System.out.println(resTemp.toJSONString());
 			if(title == null || description == null || size == null || type == null || urlRes == null)
 				continue;
 			else if(!this.repositoryController.isInt(type.toString()) || !this.repositoryController.isInt(size.toString()))
@@ -297,7 +296,7 @@ public class RepositoryAPI {
 					
 					for(int j = 0; j < areasCount; j++)
 					{
-						Object areaId = ((JSONObject) areas.get(j)).get("id");
+						Object areaId = areas.get(j);
 						if(areaId == null)
 							continue;
 						else if(!this.repositoryController.isInt(areaId.toString()))
