@@ -179,7 +179,7 @@ public class RepositoryController extends Controller {
 	    String keys[] = keywords.split(",");
 	    String where = "";
 	    for (String str : keys) 
-			where += "keyword = '"+this.escapeString(str) +"' OR ";
+			where += "keyword = '"+KeywordController.keywordFormat(str) +"' OR ";
 		
 	    where = where.substring(0, where.length() - 4);
 	    /*

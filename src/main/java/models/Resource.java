@@ -38,8 +38,7 @@ public class Resource extends Model {
 		this.url = url;
 	}
 
-	public Resource(String title, String description, int size, int repository_id, int type,
-			String url) {
+	public Resource(String title, String description, int size, int repository_id, int type, String url) {
 		super();
 		this.resource_id = resource_id;
 		this.title = title;

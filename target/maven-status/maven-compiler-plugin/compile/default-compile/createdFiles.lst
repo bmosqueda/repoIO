@@ -15,12 +15,14 @@ controllers/UserController.class
 apis/Test.class
 controllers/ResourceController.class
 apis/SchoolAPI.class
+controllers/KeywordController.class
 models/Category.class
 apis/RepositoryAPI.class
 controllers/General.class
 apis/AreaAPI.class
 apis/Response.class
 apis/CategoryAPI.class
+models/Keyword.class
 apis/UserAPI.class
 controllers/RepositoryController.class
 models/Model.class

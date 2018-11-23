@@ -56,6 +56,16 @@
 		<url-pattern>/salir/</url-pattern>
 	</servlet-mapping>
 	
+	<!-- Crear repositorio -->
+	<servlet>
+		<servlet-name>crearRepo</servlet-name>
+		<jsp-file>/views/repository/create.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>crearRepo</servlet-name>
+		<url-pattern>/repositorio/crear/</url-pattern>
+	</servlet-mapping>
+	
 	<!-- APIS -->
 	<servlet>
 		<servlet-name>Jersey REST Service</servlet-name>

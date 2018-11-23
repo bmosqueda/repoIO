@@ -9,7 +9,7 @@
 					style="padding-top: 50px; padding-bottom: 50px;">
 					<!-- <img src="/public/images/Logos/transparent-white.png" alt="Patrimonio social" width="200" height="1000"> -->
 					<img src="/public/images/Logos/BetterLogo.png"
-						alt="Patrimonio social" width="200" height="1000">
+						alt="Repo.io" width="200" height="1000">
 				</figure>
 			</a>
 			<p class="has-text-light has-text-justified">Los meros meros habaneros</p>
@@ -17,22 +17,10 @@
 		<div class="column is-2-desktop is-5-tablet is-12-mobile">
 			<p class="footer-title  title is-5 has-text-light">Página</p>
 			<ul>
-				<li class="pad-bot-li"><a href="/" class="has-text-light">Inicio</a>
+				<li class="pad-bot-li"><a href="/" class="has-text-light">Mi perfil</a>
 				</li>
 				<li class="pad-bot-li"><a href="/nosotros/"
-					class="has-text-light">Nosotros</a></li>
-				<li class="pad-bot-li"><a href="/servicios/"
-					class="has-text-light">Servicios</a></li>
-				<li class="pad-bot-li"><a href="/privacidad/"
-					class="has-text-light">Aviso de privacidad</a></li>
-				<li class="pad-bot-li"><a href="/requisitos/"
-					class="has-text-light">Requisitos</a></li>
-				<li class="pad-bot-li"><a href="/preguntas-frecuentes/"
-					class="has-text-light">Preguntas frecuentes</a></li>
-				<li class="pad-bot-li"><a href="/contacto/"
-					class="has-text-light">Contacto</a></li>
-				<li class="pad-bot-li"><a href="/acceso/"
-					class="has-text-light">Acceso</a></li>
+					class="has-text-light">Mis repositorios</a></li>
 			</ul>
 		</div>
 		<div class="column is-4-desktop is-7-tablet is-12-mobile">
@@ -46,44 +34,20 @@
               </li> -->
 				<li>
 					<p class="has-text-light" href="#">
-						<i class="fa fa-envelope"></i> <span>&nbsp;bmosqueda@ucol.mx</span>
+						<i class="fa fa-envelope"></i> <span>&nbsp;repo_io@ucol.mx</span>
 					</p>
 				</li>
 				<br>
 				<li>
 					<p class="has-text-light" href="#">
-						<i class="fa fa-phone"></i> <span>&nbsp;55 68 65 37 76</span>
+						<i class="fa fa-phone"></i> <span>&nbsp;312 329 21 32</span>
 						<!-- eli -->
 					</p>
 				</li>
 				<li>
 					<p class="has-text-light" href="#">
-						<i class="fa fa-phone"></i> <span>&nbsp;55 44 97 56 46</span>
+						<i class="fa fa-phone"></i> <span>&nbsp;312 323 18 51</span>
 						<!-- ericka -->
-					</p>
-				</li>
-				<li>
-					<p class="has-text-light" href="#">
-						<i class="fa fa-phone"></i> <span>&nbsp;55 68 63 96 99</span>
-						<!-- fer -->
-					</p>
-				</li>
-				<li>
-					<p class="has-text-light" href="#">
-						<i class="fa fa-phone"></i> <span>&nbsp;55 83 03 92 58</span>
-						<!-- Luis ramirez -->
-					</p>
-				</li>
-				<li>
-					<p class="has-text-light" href="#">
-						<i class="fa fa-phone"></i> <span>&nbsp;55 27 95 94 02</span>
-						<!-- alfredo -->
-					</p>
-				</li>
-				<li>
-					<p class="has-text-light" href="#">
-						<i class="fa fa-phone"></i> <span>&nbsp;55 30 31 31 04</span>
-						<!-- rogelio -->
 					</p>
 				</li>
 			</ul>
@@ -136,6 +100,13 @@
         });
       });
     }
+  });
+
+  //Para el input de búsquedas en el header
+  let searchInput = document.getElementById('txtSearch');
+  document.getElementById('btnSearch').addEventListener('click', function() {
+  	if(searchInput.value.trim().length > 0)
+  		window.open("/repo.io/api/repositories/title?title="+searchInput.value.trim());
   });
 </script>
 <!-- Vue.Js-->

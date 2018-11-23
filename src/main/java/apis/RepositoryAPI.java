@@ -12,11 +12,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import controllers.CategoryController;
 import controllers.RepositoryController;
+import controllers.ResourceController;
 import models.Repository;
+import models.Resource;
 
 //Sets the path to base URL + /hello
 @Path("/repositories")
@@ -107,9 +111,13 @@ public class RepositoryAPI {
 		HttpSession session = req.getSession(false);
 
 		if (session != null)
+		{
 			if (session.getAttribute("email") == null)
 				return Response.getJSONError("Necesitas iniciar sesión", 400, res);
-
+		}
+		else
+			return Response.getJSONError("Necesitas iniciar sesión", 400, res);
+		
 		JSONObject json;
 
 		try {
@@ -180,10 +188,15 @@ public class RepositoryAPI {
 		HttpSession session = req.getSession(false);
 
 		if (session != null)
+		{
 			if (session.getAttribute("email") == null)
 				return Response.getJSONError("Necesitas iniciar sesión", 400, res);
+		}
+		else
+			return Response.getJSONError("Necesitas iniciar sesión", 400, res);
 
 		JSONObject json;
+		System.out.println(body);
 
 		try {
 			json = (JSONObject) this.parser.parse(body);
@@ -194,7 +207,7 @@ public class RepositoryAPI {
 		Object name = json.get("name");
 		Object url = json.get("url");
 		Object tags = json.get("tags");
-
+		
 		if (url == null || name == null || tags == null)
 			return Response.getJSONError("Parámetros incompletos para registrar escuela", 400, res);
 
@@ -203,12 +216,112 @@ public class RepositoryAPI {
 				name.toString(), url.toString(), tags.toString());
 
 		try {
-			if (this.repositoryController.create(repository))
-				return repository.toJSON();
-			else
+			if (!this.repositoryController.create(repository))
 				return Response.getJSONError("No se pudo crear la categoría", 400, res);
 		} catch (SQLException e) {
 			return Response.getJSONError(e.getMessage(), 400, res);
 		}
+		
+		//Insertar sus categorías
+		JSONArray categories = (JSONArray)json.get("categories");
+		
+		if(categories == null)
+			return repository.toJSON();
+		
+		int categoriesCount = categories.size();
+		for(int i = 0; i < categoriesCount; i++)
+		{
+			System.out.println(categories.get(i));
+			Integer catId = Integer.parseInt(categories.get(i).toString());
+			System.out.println("CatId: " + catId);
+			if(catId == null)
+				continue;
+			else if(!this.repositoryController.isInt(catId.toString()))
+				continue;
+			
+			try {
+				this.repositoryController.insertCategoryRepository(repository.getRepository_id(), Integer.parseInt(catId.toString()));
+			} catch (SQLException e) {
+				System.out.println("Hubo un problem al guardar la categoría: " + catId.toString());
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		
+		//Insertar recursos
+		JSONArray resources = (JSONArray)json.get("resources");
+
+		if(resources== null)
+			return repository.toJSON();
+
+		int resourcesCount = resources.size();
+		for(int i = 0; i < resourcesCount; i++)
+		{
+			ResourceController resController = new ResourceController();
+			
+			JSONObject resTemp = (JSONObject) resources.get(i);
+			
+			Object title = resTemp.get("title");
+			Object description = resTemp.get("description");
+			Object size = resTemp.get("size");
+			Object type = resTemp.get("type");
+			Object urlRes = resTemp.get("url");
+			
+			if(title == null || description == null || size == null || type == null || urlRes == null)
+				continue;
+			else if(!this.repositoryController.isInt(type.toString()) || !this.repositoryController.isInt(size.toString()))
+				continue;
+
+			try {
+				Resource resource = new Resource(
+						title.toString(), 
+						description.toString(), 
+						Integer.parseInt(size.toString()),
+						repository.getRepository_id(),
+						Integer.parseInt(type.toString()),
+						urlRes.toString()
+					);
+				
+				if (!resController.create(resource))
+				{
+					System.out.println("No se pudo crear el recurso, no exception");
+					continue;
+				}
+				
+				//Insertar las áreas del recuros
+				JSONArray areas = (JSONArray)resTemp.get("areas");
+				
+				if(areas != null)
+				{
+					int areasCount = areas.size();
+					
+					for(int j = 0; j < areasCount; j++)
+					{
+						Object areaId = ((JSONObject) areas.get(j)).get("id");
+						if(areaId == null)
+							continue;
+						else if(!this.repositoryController.isInt(areaId.toString()))
+							continue;
+						
+						try {
+							resController.insertAreaResource(resource.getResource_id(), Integer.parseInt(areaId.toString()));
+						} catch (SQLException e) {
+							System.out.println("Hubo un problem al guardar el área : " + areaId.toString() + " del recuros " + resource.getResource_id());
+							System.out.println(e.getMessage());
+						}
+					}
+				}
+				
+				
+			} catch (SQLException e) {
+				System.out.println("Hubo un problem al guardar el recurso: ");
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		
+		
+		return Response.getJSONError("Todo chido", 200, res);
+		
 	}
 }

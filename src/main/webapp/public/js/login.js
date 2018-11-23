@@ -14,7 +14,7 @@ const vue = new Vue({
       }
 
       let user = {
-        email: this.email,
+        emailOrAccount: this.email,
         password: this.password
       }
 

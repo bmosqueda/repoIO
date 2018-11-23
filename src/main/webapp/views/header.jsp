@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=utf-8" %>
 <html>
   <head> 
     <meta charset="utf-8">
@@ -33,28 +34,23 @@
           <div class="navbar-start">
           </div>
           <div class="navbar-end">
-            <a class="navbar-item  is-purple has-text-weight-semibold" href="/">
-              Inicio
+            <div class="field is-grouped" style="margin-top:12px;">
+              <p class="control is-expanded">
+                <input class="input" type="text" placeholder="Buscar repositorios" id="txtSearch">
+              </p>
+              <p class="control">
+                <button class="button is-info" id="btnSearch">
+                  Buscar
+                </button>
+              </p>
+            </div>
+            <a class="navbar-item  has-text-weight-semibold" href="/">
+              Mis repositorios
             </a>
-            <a class="navbar-item is-purple has-text-weight-semibold" href="/nosotros/">
-              Nosotros
+            <a class="navbar-item has-text-weight-semibold" href="/nosotros/">
+              Mi perfil
             </a>
-            <a class="navbar-item is-purple has-text-weight-semibold" href="/servicios/">
-              Servicios
-            </a>
-            <a class="navbar-item is-purple has-text-weight-semibold" href="/privacidad/">
-              Aviso de privacidad
-            </a>
-            <a class="navbar-item is-purple has-text-weight-semibold" href="/requisitos/">
-              Requisitos
-            </a>
-            <a class="navbar-item is-purple has-text-weight-semibold" href="/preguntas-frecuentes/">
-              Preguntas frecuentes
-            </a>
-            <a class="navbar-item is-purple has-text-weight-semibold" href="/contacto/">
-              Contacto
-            </a>
-            <a class="navbar-item is-purple has-text-weight-semibold" href="/repo.io/salir/">
+            <a class="navbar-item has-text-weight-semibold" href="/repo.io/salir/">
               Salir
             </a>
           </div>
