@@ -1,11 +1,13 @@
 package models;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class Repository extends Model
 {	 
 	private int repository_id;
 	private int creator_id;
+	private int resources_count;
 	private String name;
 	private String url;
 	private String tags;
@@ -21,6 +23,17 @@ public class Repository extends Model
 		this.name = name;
 		this.url = url;
 		this.tags = tags;
+		this.creator_name = creator_name;
+	}
+	
+	public Repository(int repository_id, int creator_id, String name, String url, String tags, String creator_name, int resources_count) {
+		super();
+		this.repository_id = repository_id;
+		this.creator_id = creator_id;
+		this.name = name;
+		this.url = url;
+		this.tags = tags;
+		this.resources_count = resources_count;
 		this.creator_name = creator_name;
 	}
 	
@@ -41,8 +54,9 @@ public class Repository extends Model
 	   json.put("creator_id", this.creator_id);
 	   json.put("name", this.name);
 	   json.put("url", this.url);
-	   json.put("tags", this.tags);
+	   json.put("tags", this.tags.split(","));
 	   json.put("creator_name", this.creator_name);
+	   json.put("resources_count", this.resources_count);
 	   
 	   return json.toString();
 	 }
@@ -56,8 +70,9 @@ public class Repository extends Model
 	   json.put("creator_id", this.creator_id);
 	   json.put("name", this.name);
 	   json.put("url", this.url);
-	   json.put("tags", this.tags);
+	   json.put("tags", this.arrayToJSONArray(this.tags.split(",")));
 	   json.put("creator_name", this.creator_name);
+	   json.put("resources_count", this.resources_count);
 	   
 	   return json;
 	 }
@@ -111,5 +126,11 @@ public class Repository extends Model
 	}
 	public void setCreator_name(String creator_name) {
 		this.creator_name = creator_name;
+	}
+	public int getResources_count() {
+		return resources_count;
+	}
+	public void setResources_count(int resources_count) {
+		this.resources_count = resources_count;
 	}
 }

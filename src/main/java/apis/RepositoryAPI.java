@@ -1,6 +1,7 @@
 package apis;
 
 import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,7 @@ import controllers.RepositoryController;
 import controllers.ResourceController;
 import models.Repository;
 import models.Resource;
+import models.Category;
 
 //Sets the path to base URL + /hello
 @Path("/repositories")
@@ -36,6 +38,27 @@ public class RepositoryAPI {
 		try {
 			Repository repositories[];
 			repositories = this.repositoryController.getAll();
+			return this.repositoryController.arrayToJSON(repositories);
+		} catch (SQLException e) {
+			return Response.getJSONError(e.getMessage(), 500, res);
+		}
+	}
+	
+	@GET
+	@Path("/newest")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getNewest(@Context HttpServletRequest req, @Context HttpServletResponse res)
+			throws ClassNotFoundException {
+		Object temp = req.getAttribute("lastId");
+		int lastId = 0;
+		if(temp != null && this.repositoryController.isInt(temp.toString()))
+			lastId = Integer.parseInt(temp.toString());
+		System.out.println(lastId);
+		try {
+			Repository repositories[];
+			
+			repositories = this.repositoryController.getNewest(lastId);
+
 			return this.repositoryController.arrayToJSON(repositories);
 		} catch (SQLException e) {
 			return Response.getJSONError(e.getMessage(), 500, res);
@@ -177,8 +200,23 @@ public class RepositoryAPI {
 
 		if (repository == null)
 			return Response.getJSONError("Repositorio con el id " + id + " no encontrado", 404, res);
+		
+		//Repository to JSON
+		JSONObject json = repository.toJSONObject();
+		
+		//Agregar sus recursos
+		ResourceController resController = new ResourceController();
+		Resource resources[] = resController.getAllByRepositoryId(id);
+		
+		json.put("resources", ResourceController.arrayToJSONArray(resources));
+		
+		//Agregar sus recursos
+		CategoryController catController = new CategoryController();
+		Category categories[] = catController.getAllByRepositoryId(id);
 
-		return repository.toJSON();
+		json.put("categories", CategoryController.arrayToJSONArray(categories));
+		
+		return json.toString();
 	}
 
 	@POST

@@ -10,10 +10,9 @@
 
     <!-- Bulma -->
     <link rel="stylesheet" href="/repo.io/public/css/bulma.min.css">
-
     <title><%= title %></title>
   </head>
-  <body class="is-bold is-light">
+  <body class="is-bold is-light main">
     <!-- NavBar -->
       <nav class="navbar is-link ">
         <div class="navbar-brand">

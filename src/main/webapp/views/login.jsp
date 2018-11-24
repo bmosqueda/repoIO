@@ -27,7 +27,7 @@ if(session.getAttribute("email") != null)
 							<div class="field">
 								<div class="control">
 									<input class="input is-large" type="password" v-model="password"
-										placeholder="Contraseña">
+										placeholder="Contraseña" @keyup.enter="login">
 								</div>
 							</div>
 							<div class="field is-pulled-right">

@@ -72,4 +72,26 @@ public class CategoryController extends Controller {
     return result;
   }
 
+  public Category[] getAllByRepositoryId(int repository_id) throws ClassNotFoundException, SQLException {
+      this.open();
+
+      String sql = "SELECT c.* FROM categories_repository AS cr "+
+                    "INNER JOIN categories AS c ON cr.category_id = c.category_id "+
+                    "WHERE cr.repository_id = "+repository_id;
+
+      PreparedStatement stament = this.connector.prepareStatement(sql);
+      ResultSet resultSet = stament.executeQuery();
+      ArrayList<Category> categories = new ArrayList<Category>();
+
+      while (resultSet.next())
+        categories.add(new Category(
+            resultSet.getInt(1),
+            resultSet.getString(2)
+          ));
+
+      resultSet.close();
+      this.close();
+
+      return (Category[]) categories.toArray(new Category[categories.size()]);
+    }
 }

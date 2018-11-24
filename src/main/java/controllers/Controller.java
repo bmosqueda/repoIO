@@ -1,8 +1,10 @@
 package controllers;
 
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 
@@ -44,6 +46,16 @@ public class Controller
 			json.add(obj.toJSONObject());
 
 		return json.toString();
+	}
+	
+	public static JSONArray arrayToJSONArray(Model objs[]) 
+	{
+		JSONArray json = new JSONArray();
+
+		for (Model obj : objs) 
+			json.add(obj.toJSONObject());
+
+		return json;
 	}
 	
 	public static boolean isInt(String str)
