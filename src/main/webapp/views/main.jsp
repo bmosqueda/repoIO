@@ -19,7 +19,13 @@
         <div v-for="area in areas" class="column is-half">
           <div class="control">
             <label class="radio">
-              <input type="radio" name="area">
+              <input 
+                type="radio" 
+                :value="area.area_id" 
+                v-model="selectedArea" 
+                @change="changeArea" 
+                name="area"
+              >
               {{area.name}}
             </label>
           </div>
@@ -31,26 +37,45 @@
         <div v-for="category in categories" class="column is-half">
           <div class="control">
             <label class="radio">
-              <input type="radio" name="category">
+              <input 
+                type="radio" 
+                name="category"
+                :value="category.category_id" 
+                v-model="selectedCategory" 
+                @change="changeCategory"
+              >
               {{category.name}}
             </label>
           </div>
         </div>
       </div>
+      <hr>
+      <h1 class="title is-5">Etiquetas</h1>
       <div class="field is-grouped" style="margin-top:12px;">
-        <p class="control is-expanded">
-          <input class="input" type="text" placeholder="Buscar repositorios" id="txtSearch">
-        </p>
-        <p class="control">
-          <button class="button is-info" id="btnSearch">
+        <div class="control is-expanded">
+          <input 
+            class="input" 
+            type="text" 
+            placeholder="Etiquetas" 
+            v-model="tags" 
+            @keyup.enter="searchByTag">
+        </div>
+        <div class="control">
+          <button class="button is-info" @click="searchByTag">
             Buscar
           </button>
-        </p>
+        </div>
       </div>
+      <p class="help">Separados por coma</p>
     </div>
     <div class="column is-9" id="col-left">
       <!-- Cards -->
         <div class="columns is-multiline">
+          <h1 
+            class="has-text-centered title is-4"
+            style="margin:auto;padding-top: 50px;"
+            v-if="repositories.length == 0"
+          >No se encontraron repositorios, prueba buscando de otra forma</h1>
           <div class="column is-half" v-for="repo in repositories">
             <div class="card" style="height: 100%;">
               <header class="card-header">
@@ -62,7 +87,9 @@
                 <div class="content">
                   <strong><p>Etiquetas</p></strong>
                   <div class="tags" style="margin-bottom: 0rem;">
-                    <span class="tag" v-for="tag in repo.tags">{{tag}}</span>
+                    <div>
+                      <span :class="tag.class" v-for="tag in repo.tags" >{{tag.tag}}</span>
+                    </div>
                   </div>
 
                   <strong><p>Número de recursos</p></strong>
@@ -71,10 +98,10 @@
                   <strong><p>URL</p></strong>
                   <a :href="repo.url">{{repo.url}}</a>
                   <br>
-                  <strong><p>Categorías</p></strong>
+                  <!-- <strong><p>Categorías</p></strong>
                   <div class="tags">
                     <span class="tag" v-for="cat in repo.categories">{{cat.name}}</span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <footer class="card-footer">
@@ -88,6 +115,15 @@
   </div>
 
 <%@ include file="footer.jsp"%>
+<script>
+  <%  
+    Object temp = request.getParameter("title");
+    String param = "null";
+    if(temp != null)
+      param = "'"+temp.toString()+"'";
+  %>
+  let gTitle = <%= param %>;
+</script>
 <script src="/repo.io/public/js/main.js"></script>
 </body>
 </html>

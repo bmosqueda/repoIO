@@ -74,27 +74,30 @@ public class RepositoryController extends Controller {
   				ON r.creator_id = u.user_id 
 			WHERE c.category_id =  2; 
 		 */
-		String sql = "SELECT r.*, u.name \n" + 
-				"FROM categories_repository AS c\n" + 
-				"INNER JOIN repositories AS r\n" + 
+		String sql = "SELECT r.*, count(res.repository_id) AS resources_count, u.name AS creator_name"+ 
+				" FROM categories_repository AS c\n" + 
+				" INNER JOIN repositories AS r\n" + 
 				"  ON r.repository_id = c.repository_id \n" + 
-				"INNER JOIN users AS u \n" + 
+				" INNER JOIN users AS u \n" + 
 				"  ON r.creator_id = u.user_id \n" + 
-				"WHERE c.category_id = "+id;
-
+				" LEFT JOIN resources AS res on res.repository_id = r.repository_id \n"+
+				" WHERE c.category_id = "+id+
+				" GROUP BY r.repository_id\n" ;
+		System.out.println(sql);
 		PreparedStatement stament = this.connector.prepareStatement(sql);
 		ResultSet resultSet = stament.executeQuery();
 		ArrayList<Repository> repositories = new ArrayList<Repository>();
 
-		while (resultSet.next())
-			repositories.add(new Repository(
-					resultSet.getInt(1), 
-					resultSet.getInt(2), 
-					resultSet.getString(3),
-					resultSet.getString(4),
-					resultSet.getString(5),
-					resultSet.getString(6)
-					));
+	    while (resultSet.next())
+		      repositories.add(new Repository(
+		        resultSet.getInt("repository_id"), 
+		        resultSet.getInt("creator_id"), 
+		        resultSet.getString("name"),
+		        resultSet.getString("url"),
+		        resultSet.getString("tags"),
+		        resultSet.getString("creator_name"),
+		        resultSet.getInt("resources_count")
+		      ));
 
 		resultSet.close();
 		this.close();
@@ -110,14 +113,14 @@ public class RepositoryController extends Controller {
 	    			" LEFT JOIN resources AS res on res.repository_id = r.repository_id \n" + 
 	    			" INNER JOIN users AS u ON r.creator_id = u.user_id \n" + 
 	    			" GROUP BY r.repository_id\n" + 
-	    			" ORDER BY r.repository_id DESC LIMIT 5";
+	    			" ORDER BY r.repository_id DESC LIMIT 40";
 	    else
 	    	sql = "SELECT r.*, count(res.repository_id) AS resources_count, u.name AS creator_name FROM repositories AS r \n" + 
 	    			" LEFT JOIN resources AS res on res.repository_id = r.repository_id \n" + 
 	    			" INNER JOIN users AS u ON r.creator_id = u.user_id \n" + 
 	    			" WHERE r.repository_id < " +lastId+
 	    			" GROUP BY r.repository_id\n" + 
-	    			" ORDER BY r.repository_id DESC LIMIT 5";
+	    			" ORDER BY r.repository_id DESC LIMIT 40";
 	    
 	    PreparedStatement stament = this.connector.prepareStatement(sql);
 	    ResultSet resultSet = stament.executeQuery();
@@ -133,7 +136,6 @@ public class RepositoryController extends Controller {
 	        resultSet.getString("creator_name"),
 	        resultSet.getInt("resources_count")
 	      ));
-	    System.out.println(repositories.size());
 	    resultSet.close();
 	    this.close();
 
@@ -143,21 +145,27 @@ public class RepositoryController extends Controller {
 	public Repository[] getAllByTitle(String title) throws ClassNotFoundException, SQLException {
 		this.open();	
 
-		String sql = "SELECT r.*, u.name FROM repositories AS r INNER JOIN users AS u ON r.creator_id = u.user_id WHERE r.name LIKE '%"+this.escapeString(title)+"%'";
-
+		String sql = "SELECT r.*, count(res.repository_id) AS resources_count, u.name AS creator_name FROM repositories AS r"
+				+" LEFT JOIN resources AS res on res.repository_id = r.repository_id \n" 
+				+" INNER JOIN users AS u ON r.creator_id = u.user_id "
+				+" WHERE r.name LIKE '%"+this.escapeString(title)+"%'"
+				+" GROUP BY r.repository_id\n" 
+				+" ORDER BY r.repository_id DESC LIMIT 40";
+		
 		PreparedStatement stament = this.connector.prepareStatement(sql);
 		ResultSet resultSet = stament.executeQuery();
 		ArrayList<Repository> repositories = new ArrayList<Repository>();
 
 		while (resultSet.next())
-			repositories.add(new Repository(
-					resultSet.getInt(1), 
-					resultSet.getInt(2), 
-					resultSet.getString(3),
-					resultSet.getString(4),
-					resultSet.getString(5),
-					resultSet.getString(6)
-					));
+		      repositories.add(new Repository(
+		        resultSet.getInt("repository_id"), 
+		        resultSet.getInt("creator_id"), 
+		        resultSet.getString("name"),
+		        resultSet.getString("url"),
+		        resultSet.getString("tags"),
+		        resultSet.getString("creator_name"),
+		        resultSet.getInt("resources_count")
+		      ));
 
 		resultSet.close();
 		this.close();
@@ -180,30 +188,31 @@ public class RepositoryController extends Controller {
             WHERE ar.area_id =  1
             GROUP BY rep.repository_id
 		 */
-		String sql = "SELECT rep.*, u.name \n" + 
-				"FROM areas_resource AS ar\n" + 
-				"INNER JOIN resources AS res\n" + 
+		String sql = "SELECT rep.*, count(res.repository_id) AS resources_count, u.name AS creator_name"+ 
+				" FROM areas_resource AS ar\n" + 
+				" INNER JOIN resources AS res\n" + 
 				"  ON res.resource_id = ar.resource_id \n" + 
-				"INNER JOIN repositories AS rep\n" + 
+				" INNER JOIN repositories AS rep\n" + 
 				"  ON res.repository_id = rep.repository_id \n" + 
-				"INNER JOIN users AS u \n" + 
+				" INNER JOIN users AS u \n" + 
 				"  ON rep.creator_id = u.user_id \n" + 
-				"WHERE ar.area_id = "+id + 
+				" WHERE ar.area_id = "+id + 
 				" GROUP BY rep.repository_id";
-
+		
 		PreparedStatement stament = this.connector.prepareStatement(sql);
 		ResultSet resultSet = stament.executeQuery();
 		ArrayList<Repository> repositories = new ArrayList<Repository>();
 
 		while (resultSet.next())
-			repositories.add(new Repository(
-					resultSet.getInt(1), 
-					resultSet.getInt(2), 
-					resultSet.getString(3),
-					resultSet.getString(4),
-					resultSet.getString(5),
-					resultSet.getString(6)
-					));
+		      repositories.add(new Repository(
+		        resultSet.getInt("repository_id"), 
+		        resultSet.getInt("creator_id"), 
+		        resultSet.getString("name"),
+		        resultSet.getString("url"),
+		        resultSet.getString("tags"),
+		        resultSet.getString("creator_name"),
+		        resultSet.getInt("resources_count")
+		      ));
 
 		resultSet.close();
 		this.close();
@@ -235,19 +244,20 @@ public class RepositoryController extends Controller {
                   ON r.creator_id = u.user_id
               GROUP BY r.repository_id
 		 */
-		String sql = "SELECT r.*, u.name \n" + 
-				"FROM (\n" + 
+		String sql = "SELECT r.*, count(res.repository_id) AS resources_count, u.name AS creator_name"+ 
+				" FROM (\n" + 
 				"  SELECT keyword_id\n" + 
 				"  FROM keywords \n" + 
 				"  WHERE " + where + 
 				") AS k\n" + 
-				"INNER JOIN repositories_with_keyword AS rk\n" + 
+				" INNER JOIN repositories_with_keyword AS rk\n" + 
 				"    ON rk.keyword_id = k.keyword_id \n" + 
-				"INNER JOIN repositories AS r\n" + 
+				" INNER JOIN repositories AS r\n" + 
 				"    ON rk.repository_id = r.repository_id \n" + 
-				"INNER JOIN users AS u\n" + 
+				" INNER JOIN users AS u\n" + 
 				"    ON r.creator_id = u.user_id\n" + 
-				"GROUP BY r.repository_id";
+				" LEFT JOIN resources AS res on res.repository_id = r.repository_id \n"+
+				" GROUP BY r.repository_id";
 		System.out.println(sql);
 
 		PreparedStatement stament = this.connector.prepareStatement(sql);
@@ -255,14 +265,15 @@ public class RepositoryController extends Controller {
 		ArrayList<Repository> repositories = new ArrayList<Repository>();
 
 		while (resultSet.next())
-			repositories.add(new Repository(
-					resultSet.getInt(1), 
-					resultSet.getInt(2), 
-					resultSet.getString(3),
-					resultSet.getString(4),
-					resultSet.getString(5),
-					resultSet.getString(6)
-					));
+		      repositories.add(new Repository(
+		        resultSet.getInt("repository_id"), 
+		        resultSet.getInt("creator_id"), 
+		        resultSet.getString("name"),
+		        resultSet.getString("url"),
+		        resultSet.getString("tags"),
+		        resultSet.getString("creator_name"),
+		        resultSet.getInt("resources_count")
+		      ));
 
 		resultSet.close();
 		this.close();

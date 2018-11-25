@@ -49,7 +49,7 @@ public class RepositoryAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getNewest(@Context HttpServletRequest req, @Context HttpServletResponse res)
 			throws ClassNotFoundException {
-		Object temp = req.getAttribute("lastId");
+		Object temp = req.getParameter("lastId");
 		int lastId = 0;
 		if(temp != null && this.repositoryController.isInt(temp.toString()))
 			lastId = Integer.parseInt(temp.toString());
@@ -126,10 +126,10 @@ public class RepositoryAPI {
 		}
 	}
 
-	@GET
+	@POST
 	@Path("/keyword")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getByCreator(@Context HttpServletRequest req, String body, @Context HttpServletResponse res)
+	public String getByKeyword(@Context HttpServletRequest req, String body, @Context HttpServletResponse res)
 			throws ClassNotFoundException {
 		HttpSession session = req.getSession(false);
 

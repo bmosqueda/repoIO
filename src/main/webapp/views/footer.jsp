@@ -104,10 +104,31 @@
 
   //Para el input de búsquedas en el header
   let searchInput = document.getElementById('txtSearch');
-  document.getElementById('btnSearch').addEventListener('click', function() {
-  	if(searchInput.value.trim().length > 0)
-  		window.open("/repo.io/api/repositories/title?title="+searchInput.value.trim());
+  document.getElementById('btnSearch').addEventListener('click', searchRepos);
+
+  searchInput.addEventListener('keyup', function(ev) {
+    if(ev.keyCode == 13)
+      searchRepos();
   });
+
+  function searchRepos() {
+    if(searchInput.value.trim().length > 0)
+    {
+      if(gTitle === undefined)
+        location.href = "/repo.io/buscar/?title="+searchInput.value.trim();
+      else
+      {
+        window.axios.get('/repo.io/api/repositories/title?title='+searchInput.value.trim())
+          .then(({data}) => {
+            app.$data.repositories = data;
+          })
+          .catch(({response : {data : error}}) => {
+            console.error("Hubo un problema al obtener los repositorios");
+            console.log(error.error);
+          });
+      }
+    }
+  }
 </script>
 <!-- Vue.Js-->
 <script src="/repo.io/public/js/vue.min.js"></script>
