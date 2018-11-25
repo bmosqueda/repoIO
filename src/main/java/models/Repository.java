@@ -9,6 +9,7 @@ public class Repository extends Model
 	private int creator_id;
 	private int resources_count;
 	private String name;
+	private String description;
 	private String url;
 	private String tags;
 
@@ -16,31 +17,34 @@ public class Repository extends Model
 	private Resource resources;
 	private String creator_name;
 	
-	public Repository(int repository_id, int creator_id, String name, String url, String tags, String creator_name) {
+	public Repository(int repository_id, int creator_id, String name, String description, String url, String tags, String creator_name) {
 		super();
 		this.repository_id = repository_id;
 		this.creator_id = creator_id;
 		this.name = name;
+		this.description = description;
 		this.url = url;
 		this.tags = tags;
 		this.creator_name = creator_name;
 	}
 	
-	public Repository(int repository_id, int creator_id, String name, String url, String tags, String creator_name, int resources_count) {
+	public Repository(int repository_id, int creator_id, String name, String description, String url, String tags, String creator_name, int resources_count) {
 		super();
 		this.repository_id = repository_id;
 		this.creator_id = creator_id;
 		this.name = name;
+		this.description = description;
 		this.url = url;
 		this.tags = tags;
 		this.resources_count = resources_count;
 		this.creator_name = creator_name;
 	}
 	
-	public Repository(int creator_id, String name, String url, String tags) {
+	public Repository(int creator_id, String name, String description, String url, String tags) {
 		super();
 		this.creator_id = creator_id;
 		this.name = name;
+		this.description = description;
 		this.url = url;
 		this.tags = tags;
 	}
@@ -53,6 +57,7 @@ public class Repository extends Model
 	   json.put("repository_id", this.repository_id);
 	   json.put("creator_id", this.creator_id);
 	   json.put("name", this.name);
+	   json.put("description", this.description);
 	   json.put("url", this.url);
 	   json.put("tags", this.tags.split(","));
 	   json.put("creator_name", this.creator_name);
@@ -69,6 +74,7 @@ public class Repository extends Model
 	   json.put("repository_id", this.repository_id);
 	   json.put("creator_id", this.creator_id);
 	   json.put("name", this.name);
+	   json.put("description", this.description);
 	   json.put("url", this.url);
 	   json.put("tags", this.arrayToJSONArray(this.tags.split(",")));
 	   json.put("creator_name", this.creator_name);
@@ -132,5 +138,11 @@ public class Repository extends Model
 	}
 	public void setResources_count(int resources_count) {
 		this.resources_count = resources_count;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

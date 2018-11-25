@@ -2,6 +2,7 @@ const vue = new Vue({
   el: "#app",
   data: {
     name: '',
+    description: '',
     url: '',
     tags: '',
     repoCategories: [],
@@ -33,6 +34,7 @@ const vue = new Vue({
     },
     repoRules: {
       name : "required|maxLength,300",
+      description : "required|maxLength,3000",
       url: "required|maxLength,2083",
       tags: "maxLength,300"
     }
@@ -84,20 +86,20 @@ const vue = new Vue({
         return;
       }
 
-      let tempResource = {
-        title: this.resource.name,
-        description: this.resource.description,
-        size: this.resource.size,
-        type: this.resource.type,
-        url: this.resource.url,
-        areas: this.resource.areas,
-        visible: false
-      };
+      let tempRes = {
+          name: this.resource.name,
+          description: this.resource.description,
+          size: this.resource.size,
+          type: this.resource.type,
+          url: this.resource.url,
+          areas: this.resource.areas,
+          visible: true
+        };
 
       if(this.onEdit === false)
-        this.resources.push(tempResource);
+        this.resources.push(tempRes);
       else
-        this.resources[this.onEdit] = tempResource;
+        this.resources.splice(this.onEdit, 1, tempRes);
 
       this.resetResource();
       this.isModalVisible = !this.isModalVisible;
@@ -111,7 +113,15 @@ const vue = new Vue({
       this.onEdit = false;
       this.resources.splice(index, 1);
     },
+    foldResource(res) {
+      console.log(res.name);
+      console.log(res.url);
+      console.log(res.visible);
+      res.visible = !res.visible;
+      console.log(res.visible);
+    },
     showAdd() {
+      this.resetResource();
       this.isModalVisible = !this.isModalVisible; 
       this.onEdit = false;
     },
@@ -139,6 +149,7 @@ const vue = new Vue({
 
       let repo = {
         name: this.name,
+        description: this.description,
         url: this.url,
         tags: this.tags,
         categories: this.repoCategories,

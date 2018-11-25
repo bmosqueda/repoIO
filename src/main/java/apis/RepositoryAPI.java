@@ -243,15 +243,16 @@ public class RepositoryAPI {
 		}
 
 		Object name = json.get("name");
+		Object description = json.get("description");
 		Object url = json.get("url");
 		Object tags = json.get("tags");
 		
-		if (url == null || name == null || tags == null)
+		if (url == null || description == null || name == null || tags == null)
 			return Response.getJSONError("Parámetros incompletos para registrar escuela", 400, res);
 
 		Object creator_id = json.get("creator_id");
 		Repository repository = new Repository(Integer.parseInt(session.getAttribute("user_id").toString()),
-				name.toString(), url.toString(), tags.toString());
+				name.toString(), description.toString(), url.toString(), tags.toString());
 
 		try {
 			if (!this.repositoryController.create(repository))
@@ -299,12 +300,12 @@ public class RepositoryAPI {
 			JSONObject resTemp = (JSONObject) resources.get(i);
 			
 			Object title = resTemp.get("title");
-			Object description = resTemp.get("description");
+			Object resDescription = resTemp.get("description");
 			Object size = resTemp.get("size");
 			Object type = resTemp.get("type");
 			Object urlRes = resTemp.get("url");
 			System.out.println(resTemp.toJSONString());
-			if(title == null || description == null || size == null || type == null || urlRes == null)
+			if(title == null || resDescription == null || size == null || type == null || urlRes == null)
 				continue;
 			else if(!this.repositoryController.isInt(type.toString()) || !this.repositoryController.isInt(size.toString()))
 				continue;
@@ -312,7 +313,7 @@ public class RepositoryAPI {
 			try {
 				Resource resource = new Resource(
 						title.toString(), 
-						description.toString(), 
+						resDescription.toString(), 
 						Integer.parseInt(size.toString()),
 						repository.getRepository_id(),
 						Integer.parseInt(type.toString()),

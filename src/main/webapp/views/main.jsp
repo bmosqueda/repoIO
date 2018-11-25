@@ -8,7 +8,7 @@
     }
 
     .card-content {
-      height: 250px;
+      height: 300px;
       overflow: hidden;
     }
   </style>
@@ -97,6 +97,9 @@
                   
                   <strong><p>URL</p></strong>
                   <a :href="repo.url">{{repo.url}}</a>
+
+                  <strong><p>Descripci&oacute;n</p></strong>
+                  <p>{{repo.description}}</p>
                   <br>
                   <!-- <strong><p>Categorías</p></strong>
                   <div class="tags">

@@ -66,6 +66,7 @@
     repository_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     creator_id INT NOT NULL,
     name VARCHAR(300) NOT NULL,
+    description VARCHAR(3000) NOT NULL,
     url VARCHAR(2083) NOT NULL,
     tags VARCHAR(300) NOT NULL,
     CONSTRAINT creator_reference_repositories

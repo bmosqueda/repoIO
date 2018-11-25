@@ -71,14 +71,14 @@
           <div class="field">
             <label class="label modal-label">T&iacute;tulo<span class="has-text-danger">*</span></label>
             <div class="control">
-              <input class="input" type="text" placeholder="Número de cuenta" v-model="name">
+              <input class="input" type="text" placeholder="N&uacute;mero de cuenta" v-model="name">
             </div>
           </div>
 
           <div class="field">
             <label class="label modal-label">URL<span class="has-text-danger">*</span></label>
             <div class="control">
-              <input class="input" type="text" placeholder="Número de cuenta" v-model="url">
+              <input class="input" type="text" placeholder="N&uacute;mero de cuenta" v-model="url">
             </div>
           </div>
           
@@ -86,9 +86,10 @@
           <div class="field">
             <label class="label modal-label">Etiquetas</label>
             <div class="control">
-              <input class="input" type="tags" placeholder="Add Tag">
+              <input class="input" type="tags" v-model="tags" placeholder="Add Tag">
             </div>
           </div>
+          <p class="help">Separados por coma</p>
           
           <!-- <div class="field">
             <label class="label modal-label">Categor&iacute;a</label>
@@ -119,6 +120,13 @@
               </div>
             </div>
           </div>
+          
+          <div class="field">
+            <label class="label modal-label">Descripci&oacute;n</label>
+            <div class="control">
+              <textarea maxlength="300" v-model="description" class="textarea" placeholder="Descripci&oacute;n..."></textarea>
+            </div>
+          </div>
 
           <p class="help feed is-danger" v-for="err in errors.repo">{{err}}</p>
           <div class="field">
@@ -140,10 +148,10 @@
                 <div class="card">
                   <header class="card-header">
                     <p class="card-header-title">
-                      {{res.title}}
+                      {{res.name}}
                     </p>
-                    <a class="card-header-icon" aria-label="more options">
-                      <span class="icon" @click="res.visible = !res.visible">
+                    <a class="card-header-icon" @click="foldResource(res)" aria-label="more options">
+                      <span class="icon">
                         <i class="fas fa-angle-down" aria-hidden="true"></i>
                       </span>
                     </a>
@@ -285,7 +293,7 @@
             <div class="field">
               <label class="label modal-label">URL<span class="has-text-danger">*</span></label>
               <div class="control">
-                <input class="input" type="text" v-model="resource.url" placeholder="Número de cuenta" v-model="url">
+                <input class="input" type="text" v-model="resource.url" placeholder="N&uacute;mero de cuenta" v-model="url">
               </div>
             </div>
             <div id="divResourceError">

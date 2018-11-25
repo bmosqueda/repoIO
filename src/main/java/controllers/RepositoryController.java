@@ -15,21 +15,22 @@ public class RepositoryController extends Controller {
 	public Repository[] getAll() throws ClassNotFoundException, SQLException {
 		this.open();
 
-		String sql = "SELECT r.*, u.name FROM repositories AS r INNER JOIN users AS u ON r.creator_id = u.user_id";
+		String sql = "SELECT r.*, u.name AS creator_name FROM repositories AS r INNER JOIN users AS u ON r.creator_id = u.user_id";
 
 		PreparedStatement stament = this.connector.prepareStatement(sql);
 		ResultSet resultSet = stament.executeQuery();
 		ArrayList<Repository> repositories = new ArrayList<Repository>();
 
 		while (resultSet.next())
-			repositories.add(new Repository(
-					resultSet.getInt(1), 
-					resultSet.getInt(2), 
-					resultSet.getString(3),
-					resultSet.getString(4),
-					resultSet.getString(5),
-					resultSet.getString(6)
-					));
+		      repositories.add(new Repository(
+		        resultSet.getInt("repository_id"), 
+		        resultSet.getInt("creator_id"), 
+		        resultSet.getString("name"),
+		        resultSet.getString("description"),
+		        resultSet.getString("url"),
+		        resultSet.getString("tags"),
+		        resultSet.getString("creator_name")
+		      ));
 
 		resultSet.close();
 		this.close();
@@ -40,21 +41,22 @@ public class RepositoryController extends Controller {
 	public Repository[] getAllByCreator(int id) throws ClassNotFoundException, SQLException {
 		this.open();
 
-		String sql = "SELECT r.*, u.name FROM repositories AS r INNER JOIN users AS u ON r.creator_id = u.user_id WHERE r.creator_id = "+id;
+		String sql = "SELECT r.*, u.name AS creator_name FROM repositories AS r INNER JOIN users AS u ON r.creator_id = u.user_id WHERE r.creator_id = "+id;
 
 		PreparedStatement stament = this.connector.prepareStatement(sql);
 		ResultSet resultSet = stament.executeQuery();
 		ArrayList<Repository> repositories = new ArrayList<Repository>();
-
+		
 		while (resultSet.next())
-			repositories.add(new Repository(
-					resultSet.getInt(1), 
-					resultSet.getInt(2), 
-					resultSet.getString(3),
-					resultSet.getString(4),
-					resultSet.getString(5),
-					resultSet.getString(6)
-					));
+		      repositories.add(new Repository(
+		        resultSet.getInt("repository_id"), 
+		        resultSet.getInt("creator_id"), 
+		        resultSet.getString("name"),
+		        resultSet.getString("description"),
+		        resultSet.getString("url"),
+		        resultSet.getString("tags"),
+		        resultSet.getString("creator_name")
+		      ));
 
 		resultSet.close();
 		this.close();
@@ -93,6 +95,7 @@ public class RepositoryController extends Controller {
 		        resultSet.getInt("repository_id"), 
 		        resultSet.getInt("creator_id"), 
 		        resultSet.getString("name"),
+		        resultSet.getString("description"),
 		        resultSet.getString("url"),
 		        resultSet.getString("tags"),
 		        resultSet.getString("creator_name"),
@@ -127,15 +130,16 @@ public class RepositoryController extends Controller {
 	    ArrayList<Repository> repositories = new ArrayList<Repository>();
 
 	    while (resultSet.next())
-	      repositories.add(new Repository(
-	        resultSet.getInt("repository_id"), 
-	        resultSet.getInt("creator_id"), 
-	        resultSet.getString("name"),
-	        resultSet.getString("url"),
-	        resultSet.getString("tags"),
-	        resultSet.getString("creator_name"),
-	        resultSet.getInt("resources_count")
-	      ));
+		      repositories.add(new Repository(
+		        resultSet.getInt("repository_id"), 
+		        resultSet.getInt("creator_id"), 
+		        resultSet.getString("name"),
+		        resultSet.getString("description"),
+		        resultSet.getString("url"),
+		        resultSet.getString("tags"),
+		        resultSet.getString("creator_name"),
+		        resultSet.getInt("resources_count")
+		      ));
 	    resultSet.close();
 	    this.close();
 
@@ -161,12 +165,12 @@ public class RepositoryController extends Controller {
 		        resultSet.getInt("repository_id"), 
 		        resultSet.getInt("creator_id"), 
 		        resultSet.getString("name"),
+		        resultSet.getString("description"),
 		        resultSet.getString("url"),
 		        resultSet.getString("tags"),
 		        resultSet.getString("creator_name"),
 		        resultSet.getInt("resources_count")
 		      ));
-
 		resultSet.close();
 		this.close();
 
@@ -208,6 +212,7 @@ public class RepositoryController extends Controller {
 		        resultSet.getInt("repository_id"), 
 		        resultSet.getInt("creator_id"), 
 		        resultSet.getString("name"),
+		        resultSet.getString("description"),
 		        resultSet.getString("url"),
 		        resultSet.getString("tags"),
 		        resultSet.getString("creator_name"),
@@ -269,12 +274,12 @@ public class RepositoryController extends Controller {
 		        resultSet.getInt("repository_id"), 
 		        resultSet.getInt("creator_id"), 
 		        resultSet.getString("name"),
+		        resultSet.getString("description"),
 		        resultSet.getString("url"),
 		        resultSet.getString("tags"),
 		        resultSet.getString("creator_name"),
 		        resultSet.getInt("resources_count")
 		      ));
-
 		resultSet.close();
 		this.close();
 
@@ -283,7 +288,7 @@ public class RepositoryController extends Controller {
 
 	public Repository getById(int id) throws ClassNotFoundException, SQLException {
 		this.open();
-		String sql = "SELECT r.*, u.name FROM repositories AS r INNER JOIN users AS u ON r.creator_id = u.user_id WHERE r.repository_id = "+id;
+		String sql = "SELECT r.*, u.name AS creator_name FROM repositories AS r INNER JOIN users AS u ON r.creator_id = u.user_id WHERE r.repository_id = "+id;
 
 		PreparedStatement stament = this.connector.prepareStatement(sql);
 		ResultSet resultSet = stament.executeQuery();
@@ -291,12 +296,13 @@ public class RepositoryController extends Controller {
 
 		if (resultSet.next())
 			repository = new Repository(
-					resultSet.getInt(1), 
-					resultSet.getInt(2), 
-					resultSet.getString(3),
-					resultSet.getString(4),
-					resultSet.getString(5),
-					resultSet.getString(6)
+					resultSet.getInt("repository_id"), 
+					resultSet.getInt("creator_id"), 
+					resultSet.getString("name"),
+					resultSet.getString("description"),
+					resultSet.getString("url"),
+					resultSet.getString("tags"),
+					resultSet.getString("creator_name")
 					);
 
 		resultSet.close();
@@ -306,15 +312,16 @@ public class RepositoryController extends Controller {
 	}
 
 	public boolean create(Repository repository) throws SQLException, ClassNotFoundException {
-		String sql = "INSERT INTO repositories (creator_id, name, url, tags) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO repositories (creator_id, name, description, url, tags) VALUES (?, ?, ?, ?, ?)";
 
 		this.open();
 
 		PreparedStatement stament = this.connector.prepareStatement(sql);
 		stament.setInt(1, repository.getCreator_id());
 		stament.setString(2, repository.getName());
-		stament.setString(3, repository.getUrl());
-		stament.setString(4, repository.getTags());
+		stament.setString(3, repository.getDescription());
+		stament.setString(4, repository.getUrl());
+		stament.setString(5, repository.getTags());
 
 		stament.executeQuery();
 		ResultSet generatedKeys = stament.getGeneratedKeys();
