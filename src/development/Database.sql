@@ -188,5 +188,10 @@
     INSERT INTO repositories_with_keyword (repository_id, keyword_id) VALUES (1, 2);
     INSERT INTO repositories_with_keyword (repository_id, keyword_id) VALUES (2, 1);
 
+  -- Authors_resource
+    INSERT INTO authors_resource (author_id, resource_id) VALUES (1, 3);
+    INSERT INTO authors_resource (author_id, resource_id) VALUES (2, 3);
+    INSERT INTO authors_resource (author_id, resource_id) VALUES (3, 3);
+
 -- Grants
   GRANT ALL PRIVILEGES ON repoIo.* TO repoIo@localhost;

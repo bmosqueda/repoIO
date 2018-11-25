@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import models.Area;
 import models.Author;
 import models.Repository;
 
@@ -84,6 +85,24 @@ public class AuthorController extends Controller {
 
     return result;
   }
+  
+  public Author[] getByResourceId(int id) throws ClassNotFoundException, SQLException {
+	    this.open();
+
+	    String sql = "SELECT a.* FROM authors_resource AS ar INNER JOIN authors AS a ON ar.author_id = a.author_id WHERE ar.resource_id = "+ id;
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+	    ResultSet resultSet = stament.executeQuery();
+	    ArrayList<Author> authors = new ArrayList<Author>();
+
+	    while (resultSet.next())
+	      authors.add(new Author(resultSet.getInt("author_id"), resultSet.getString("name"), resultSet.getString("alias"), resultSet.getString("country_of_birth")));
+
+	    resultSet.close();
+	    this.close();
+
+	    return (Author[]) authors.toArray(new Author[authors.size()]);
+	  }
   
   public Author[] getAllByNameOrAlias(String name) throws ClassNotFoundException, SQLException {
 	    this.open();	

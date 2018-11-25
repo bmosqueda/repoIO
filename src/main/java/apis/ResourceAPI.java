@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -51,10 +52,10 @@ public class ResourceAPI {
               return Response.getJSONError("Necesitas iniciar sesión", 400, res);
       
     try {
-      Resource resources[];
-      resources = this.resourceController.getAllByRepositoryId(id);
+      
+      JSONArray resources = this.resourceController.getAllByRepositoryIdJSON(id);
 
-      return this.resourceController.arrayToJSON(resources);
+      return resources.toString();
     } catch (SQLException e) {
       return Response.getJSONError("Error al busca el recurso", 500, res);
     }

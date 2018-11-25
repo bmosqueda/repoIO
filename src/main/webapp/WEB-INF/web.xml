@@ -66,6 +66,26 @@
 		<url-pattern>/repositorio/crear/</url-pattern>
 	</servlet-mapping>
 	
+	<!-- Ver repositorio -->
+	<servlet>
+		<servlet-name>verRepo</servlet-name>
+		<jsp-file>/views/repository/view.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>verRepo</servlet-name>
+		<url-pattern>/repositorio/ver/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Mi perfil -->
+	<servlet>
+		<servlet-name>myProfile</servlet-name>
+		<jsp-file>/views/user/profile.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>myProfile</servlet-name>
+		<url-pattern>/perfil/</url-pattern>
+	</servlet-mapping>
+	
 	<!-- APIS -->
 	<servlet>
 		<servlet-name>Jersey REST Service</servlet-name>

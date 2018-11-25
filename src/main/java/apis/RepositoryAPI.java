@@ -204,18 +204,21 @@ public class RepositoryAPI {
 		//Repository to JSON
 		JSONObject json = repository.toJSONObject();
 		
-		//Agregar sus recursos
-		ResourceController resController = new ResourceController();
-		Resource resources[] = resController.getAllByRepositoryId(id);
-		
-		json.put("resources", ResourceController.arrayToJSONArray(resources));
-		
-		//Agregar sus recursos
+		//Agregar sus categorías
 		CategoryController catController = new CategoryController();
 		Category categories[] = catController.getAllByRepositoryId(id);
 
 		json.put("categories", CategoryController.arrayToJSONArray(categories));
+
+		if (req.getParameter("withoutResources") != null)
+			return json.toString();
 		
+		//Agregar sus recursos
+		ResourceController resController = new ResourceController();
+		JSONArray resources = resController.getAllByRepositoryIdJSON(id);
+
+		json.put("resources", resources);
+				
 		return json.toString();
 	}
 

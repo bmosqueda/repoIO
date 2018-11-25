@@ -11,6 +11,24 @@
       height: 300px;
       overflow: hidden;
     }
+
+    .is-shady {
+      animation: flyintoright .4s backwards;
+      background: #fff;
+      box-shadow: rgba(0, 0, 0, .1) 0 1px 0;
+      border-radius: 4px;
+      /*display: inline-block;*/
+      margin: 10px;
+      position: relative;
+      transition: all .2s ease-in-out;
+    }
+    .card {
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+      margin-bottom: 2rem;
+    }
+    .is-shady:hover {
+      box-shadow: 0 10px 16px rgba(0, 0, 0, .13), 0 6px 6px rgba(0, 0, 0, .19);
+    }
   </style>
   <div class="columns" id="app"> 
     <div class="column has-background-light is-3" style="padding-top: 3rem;padding-left: 3rem;">
@@ -70,14 +88,19 @@
     </div>
     <div class="column is-9" id="col-left">
       <!-- Cards -->
-        <div class="columns is-multiline">
           <h1 
             class="has-text-centered title is-4"
             style="margin:auto;padding-top: 50px;"
             v-if="repositories.length == 0"
           >No se encontraron repositorios, prueba buscando de otra forma</h1>
+          <h1 
+            class="has-text-centered title is-4"
+            style="margin:auto;padding-top: 20px;padding-bottom: 15px;"
+            v-else
+          >Repositorios</h1>
+        <div class="columns is-multiline">
           <div class="column is-half" v-for="repo in repositories">
-            <div class="card" style="height: 100%;">
+            <div class="card is-shady">
               <header class="card-header">
                 <p class="card-header-title">
                   {{repo.name}}

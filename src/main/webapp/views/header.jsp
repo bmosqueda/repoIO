@@ -46,7 +46,10 @@
                 </button>
               </p>
             </div>
-            <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-item has-text-weight-semibold" href="/repo.io/repositorio/crear/">
+              Crear repositorio
+            </a>
+            <!-- <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
                 Repositorios
               </a>
@@ -58,8 +61,8 @@
                     Mis repositorios
                   </a>
                 </div>
-            </div>
-            <a class="navbar-item has-text-weight-semibold" href="/nosotros/">
+            </div> -->
+            <a class="navbar-item has-text-weight-semibold" href="/repo.io/perfil/">
               Mi perfil
             </a>
             <a class="navbar-item has-text-weight-semibold" href="/repo.io/salir/">

@@ -63,6 +63,30 @@ public class RepositoryController extends Controller {
 
 		return (Repository[]) repositories.toArray(new Repository[repositories.size()]);
 	}
+	
+	//Para la vista de mi perfil que sólo se carga poca info del repo en la tabla
+	public Repository[] getBasicInfoByCreator(int id) throws ClassNotFoundException, SQLException {
+		this.open();
+
+		String sql = "SELECT repository_id, name, url, description FROM repositories WHERE creator_id = "+id;
+
+		PreparedStatement stament = this.connector.prepareStatement(sql);
+		ResultSet resultSet = stament.executeQuery();
+		ArrayList<Repository> repositories = new ArrayList<Repository>();
+		
+		while (resultSet.next())
+		      repositories.add(new Repository(
+		        resultSet.getInt("repository_id"), 
+		        resultSet.getString("name"),
+		        resultSet.getString("description"),
+		        resultSet.getString("url")
+		      ));
+
+		resultSet.close();
+		this.close();
+
+		return (Repository[]) repositories.toArray(new Repository[repositories.size()]);
+	}
 
 	public Repository[] getAllByCategory(int id) throws ClassNotFoundException, SQLException {
 		this.open();

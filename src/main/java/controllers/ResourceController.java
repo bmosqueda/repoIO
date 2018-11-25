@@ -5,6 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import models.Area;
+import models.Author;
 import models.Resource;
 
 public class ResourceController extends Controller {
@@ -38,30 +43,46 @@ public class ResourceController extends Controller {
     return (Resource[]) resources.toArray(new Resource[resources.size()]);
   }
   
-  public Resource[] getAllByRepositoryId(int repository_id) throws ClassNotFoundException, SQLException {
+  public JSONArray getAllByRepositoryIdJSON(int repository_id) throws ClassNotFoundException, SQLException {
 	    this.open();
 
 	    String sql = "SELECT * FROM resources WHERE repository_id = "+repository_id;
 
 	    PreparedStatement stament = this.connector.prepareStatement(sql);
 	    ResultSet resultSet = stament.executeQuery();
-	    ArrayList<Resource> resources = new ArrayList<Resource>();
-
+	    
+	    AreaController areaController = new AreaController();
+	    AuthorController authorController = new AuthorController();
+	    
+	    JSONArray json = new JSONArray();
+	    
 	    while (resultSet.next())
-	      resources.add(new Resource(
-	          resultSet.getInt(1),
-	          resultSet.getString(2),
-	          resultSet.getString(3),
-	          resultSet.getInt(4),
-	          resultSet.getInt(5),
-	          resultSet.getInt(6),
-	          resultSet.getString(7)
-	        ));
+	    {
+	    	Resource resource = new Resource(
+	  	          resultSet.getInt(1),
+		          resultSet.getString(2),
+		          resultSet.getString(3),
+		          resultSet.getInt(4),
+		          resultSet.getInt(5),
+		          resultSet.getInt(6),
+		          resultSet.getString(7)
+		        );
+	    	
+	    	JSONObject resourceJSON = resource.toJSONObject();
+	    	
+	    	Area areas[] = areaController.getByResourceId(resultSet.getInt("resource_id"));
+	    	resourceJSON.put("areas", this.arrayToJSONArray(areas));
+	    	
+	    	Author authors[] = authorController.getByResourceId(resultSet.getInt("resource_id"));
+	    	resourceJSON.put("authors", this.arrayToJSONArray(authors));
+	    	
+	    	json.add(resourceJSON);
+	    }
 
 	    resultSet.close();
 	    this.close();
 
-	    return (Resource[]) resources.toArray(new Resource[resources.size()]);
+	    return json;
 	  }
 
   public Resource getById(int id) throws ClassNotFoundException, SQLException {

@@ -17,7 +17,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import controllers.RepositoryController;
 import controllers.UserController;
+import models.Repository;
 import models.School;
 import models.User;
 
@@ -53,6 +55,36 @@ public class UserAPI {
 			return Response.getJSONError("Usuario con el id " + id + " no encontrado", 404, res);
 
 		return user.toJSON();
+	}
+	
+	@GET
+	@Path("/mine")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getMyInfo(@Context HttpServletRequest req, @Context HttpServletResponse res)
+			throws ClassNotFoundException, SQLException {
+		HttpSession session = req.getSession(false);
+
+		if (session != null)
+		{
+			if (session.getAttribute("email") == null)
+				return Response.getJSONError("Necesitas iniciar sesión", 400, res);
+		}
+		else
+			return Response.getJSONError("Necesitas iniciar sesión", 400, res);
+		
+		int userId = Integer.parseInt(session.getAttribute("user_id").toString());
+		
+		User user = this.userController.getById(userId);
+
+		if (user == null)
+			return Response.getJSONError("Usuario con el id " + userId + " no encontrado", 404, res);
+		
+		JSONObject userJSON = user.toJSONObject();
+		RepositoryController repoController = new RepositoryController();
+		Repository repos[] = repoController.getBasicInfoByCreator(userId);
+		userJSON.put("repositories", repoController.arrayToJSONArray(repos));
+		
+		return userJSON.toString();
 	}
 
 	@POST

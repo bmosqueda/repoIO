@@ -29,6 +29,24 @@ public class AreaController extends Controller {
 
     return (Area[]) areas.toArray(new Area[areas.size()]);
   }
+  
+  public Area[] getByResourceId(int id) throws ClassNotFoundException, SQLException {
+	    this.open();
+
+	    String sql = "SELECT a.* FROM areas_resource AS ar INNER JOIN areas AS a ON ar.area_id = a.area_id WHERE ar.resource_id = "+ id;
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+	    ResultSet resultSet = stament.executeQuery();
+	    ArrayList<Area> areas = new ArrayList<Area>();
+
+	    while (resultSet.next())
+	      areas.add(new Area(resultSet.getInt("area_id"), resultSet.getString("name")));
+
+	    resultSet.close();
+	    this.close();
+
+	    return (Area[]) areas.toArray(new Area[areas.size()]);
+	  }
 
   public Area getById(int id) throws ClassNotFoundException, SQLException {
     this.open();

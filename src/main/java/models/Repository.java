@@ -49,6 +49,15 @@ public class Repository extends Model
 		this.tags = tags;
 	}
 	
+	public Repository(int repository_id, String name, String description, String url) {
+		// super();
+		this.repository_id = repository_id;
+		this.name = name;
+		this.tags = "";
+		this.description = description;
+		this.url = url;
+	}
+
 	@SuppressWarnings("unchecked")
 	 @Override
 	 public String toJSON() {
