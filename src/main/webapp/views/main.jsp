@@ -122,7 +122,7 @@
     if(temp != null)
       param = "'"+temp.toString()+"'";
   %>
-  let gTitle = <%= param %>;
+  gTitle = <%= param %>;
 </script>
 <script src="/repo.io/public/js/main.js"></script>
 </body>

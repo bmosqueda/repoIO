@@ -59,8 +59,8 @@
 			</a> <a target="_blank" class="has-text-light"> <i
 				class="fab fa-twitter" style="font-size: 3em;"></i>
 			</a> <a target="_blank"
-				href="https://www.youtube.com/watch?v=RMZCogCCfM0"
-				class="has-text-light"> <i class="fab fa-youtube"
+				href="https://github.com/bmosqueda/repoIO"
+				class="has-text-light"> <i class="fab fa-github"
 				style="font-size: 3em;"></i>
 			</a>
 			<!-- <a target="_blank" class="has-text-light">
@@ -110,7 +110,7 @@
     if(ev.keyCode == 13)
       searchRepos();
   });
-
+  
   function searchRepos() {
     if(searchInput.value.trim().length > 0)
     {
@@ -121,6 +121,7 @@
         window.axios.get('/repo.io/api/repositories/title?title='+searchInput.value.trim())
           .then(({data}) => {
             app.$data.repositories = data;
+            app.formatTags();
           })
           .catch(({response : {data : error}}) => {
             console.error("Hubo un problema al obtener los repositorios");

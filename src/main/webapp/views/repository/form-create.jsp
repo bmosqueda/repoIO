@@ -66,10 +66,10 @@
   <section class="container">
     <div class="columns">
       <div class="column is-5">
-        <h1 class="subtitle is-3 has-text-centered">Información del repositorio</h1>
+        <h1 class="subtitle is-3 has-text-centered">Informaci&oacute;n del repositorio</h1>
         <div class="box content">
           <div class="field">
-            <label class="label modal-label">Título<span class="has-text-danger">*</span></label>
+            <label class="label modal-label">T&iacute;tulo<span class="has-text-danger">*</span></label>
             <div class="control">
               <input class="input" type="text" placeholder="Número de cuenta" v-model="name">
             </div>
@@ -91,7 +91,7 @@
           </div>
           
           <!-- <div class="field">
-            <label class="label modal-label">Categoría</label>
+            <label class="label modal-label">Categor&iacute;a</label>
             <div class="control">
               <div class="select" style="width: 100%;">
                 <select v-model="category_id" style="width: 100%;">
@@ -100,7 +100,7 @@
               </div>
             </div>
           </div> -->
-          <label class="label modal-label">Categorías</label>
+          <label class="label modal-label">Categor&iacute;as</label>
           <div class="columns" style="margin-top: 10px;margin-bottom: 10px;">
             <div class="column is-half">
               <div v-for="(cat, index) in categories">
@@ -135,7 +135,7 @@
               <p class="menu-label">
                 Recursos
               </p>
-              <h1 v-if="resources.length == 0" class="subtitle is-3 has-text-centered">Aún no has agregado recursos</h1>
+              <h1 v-if="resources.length == 0" class="subtitle is-3 has-text-centered">A&uacute;n no has agregado recursos</h1>
               <div v-for="(res, index) in resources">
                 <div class="card">
                   <header class="card-header">
@@ -192,28 +192,28 @@
         </header>
         <section class="modal-card-body">                
             <div class="field">
-              <label class="label modal-label">Título<span class="has-text-danger">*</span></label>
+              <label class="label modal-label">T&iacute;tulo<span class="has-text-danger">*</span></label>
               <div class="control">
-                <input class="input" type="text" placeholder="Título" v-model="resource.name">
+                <input class="input" type="text" placeholder="T&iacute;tulo" v-model="resource.name">
               </div>
             </div>
 
             <div class="field">
-              <label class="label modal-label">Descripción</label>
+              <label class="label modal-label">Descripci&oacute;n</label>
               <div class="control">
-                <textarea maxlength="300" v-model="resource.description" class="textarea" placeholder="Descripción..."></textarea>
+                <textarea maxlength="300" v-model="resource.description" class="textarea" placeholder="Descripci&oacute;n..."></textarea>
               </div>
             </div>
             
             <div class="field">
-              <label class="label modal-label">Tamaño <span class="has-text-muted">(en MB)</span><span class="has-text-danger">*</span></label>
+              <label class="label modal-label">Tama&ntilde;o <span class="has-text-muted">(en MB)</span><span class="has-text-danger">*</span></label>
               <div class="control">
-                <input class="input" type="number" v-model="resource.size" placeholder="Tamaño">
+                <input class="input" type="number" v-model="resource.size" placeholder="Tama&ntilde;o">
               </div>
             </div>
             
 
-            <label class="label modal-label">Áreas</label>
+            <label class="label modal-label">&Aacute;reas</label>
             <div class="columns" style="margin-top: 10px;margin-bottom: 10px;">
               <div class="column is-half">
                 <div v-for="(area, index) in areas">

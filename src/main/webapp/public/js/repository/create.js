@@ -78,8 +78,9 @@ const vue = new Vue({
         validator.validate(this.resource, this.validationRules);
       } catch(ex) {
         console.log(ex);
-        this.errors.resource = ex.message.split('\n');
-        location.href = location.href + '#divResourceError';
+        alert(ex.message);
+        // this.errors.resource = ex.message.split('\n');
+        // location.href = location.href + '#divResourceError';
         return;
       }
 

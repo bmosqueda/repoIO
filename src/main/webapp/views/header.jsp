@@ -12,11 +12,14 @@
     <link rel="stylesheet" href="/repo.io/public/css/bulma.min.css">
     <title><%= title %></title>
   </head>
+  <script>
+    let gTitle = undefined;
+  </script>
   <body class="is-bold is-light main">
     <!-- NavBar -->
       <nav class="navbar is-link ">
         <div class="navbar-brand">
-          <a class="navbar-item" href="/">
+          <a class="navbar-item" href="/repo.io/  ">
             <img class="logo-no-mobile" src="/public/images/Logos/logo-10.jpeg" alt="Repo.IO"  width="300" height="2000">
             <!-- <figure class="logo-mobile image is-32x32 is-pulled-right text-mobile">
               <img src="/public/images/Logos/transparent-ico.png" alt="Sociedad Patrimonial 2018 ©">
@@ -43,9 +46,19 @@
                 </button>
               </p>
             </div>
-            <a class="navbar-item  has-text-weight-semibold" href="/">
-              Mis repositorios
-            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
+                Repositorios
+              </a>
+                <div class="navbar-dropdown is-boxed">
+                  <a class="navbar-item" href="/repo.io/repositorio/crear/">
+                    Crear
+                  </a>
+                  <a class="navbar-item" href="/repositorio/mios/">
+                    Mis repositorios
+                  </a>
+                </div>
+            </div>
             <a class="navbar-item has-text-weight-semibold" href="/nosotros/">
               Mi perfil
             </a>
