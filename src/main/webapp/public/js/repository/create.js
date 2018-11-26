@@ -27,7 +27,7 @@ const vue = new Vue({
       repo: []
     },
     validationRules: {
-      name : "required|maxLength,250",
+      title : "required|maxLength,250",
       description : "required|maxLength,250",
       size: "isNumber|required",
       type: "isNumber|required",
@@ -94,7 +94,7 @@ const vue = new Vue({
           type: this.resource.type,
           url: this.resource.url,
           areas: this.resource.areas,
-          visible: true
+          visible: false
         };
 
       if(this.onEdit === false)
@@ -132,6 +132,8 @@ const vue = new Vue({
       this.resource.size = 1;
       this.resource.type = 1;
       this.resource.url = '';
+      this.resource.areas = [];
+      this.resource.authors = [];
 
       this.errors.resource = [];
     },

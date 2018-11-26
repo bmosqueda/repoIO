@@ -157,18 +157,19 @@ public class UserAPI {
 		Object name = json.get("name");
 		Object email = json.get("email");
 		Object password = json.get("password");
-		Object role = json.get("role");
 		Object school_id = json.get("school_id");
 
-		if (email == null || name == null || password == null || role == null || school_id == null
+		if (email == null || name == null || password == null || school_id == null
 				|| account_number == null)
 			return Response.getJSONError("Parámetros incompletos para registrar usuario", 400, res);
-
-		if (!(UserController.isInt(role.toString()) || UserController.isInt(school_id.toString())))
+		
+		int role = 3;
+		
+		if (!(UserController.isInt(school_id.toString())))
 			return Response.getJSONError("Parámetros incorrectos para registrar usuario", 400, res);
 
 		User user = new User(account_number.toString(), name.toString(), email.toString(), password.toString(),
-				Integer.parseInt(role.toString()), Integer.parseInt(school_id.toString()));
+				role, Integer.parseInt(school_id.toString()));
 
 		try {
 			if (this.userController.create(user)) {

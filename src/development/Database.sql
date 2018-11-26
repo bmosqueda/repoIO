@@ -146,20 +146,26 @@
     INSERT INTO schools (name) VALUES('Facultad de contabilidad');
     INSERT INTO schools (name) VALUES('Facultad de derecho');
     INSERT INTO schools (name) VALUES('Facultad de medicina');
+    INSERT INTO schools (name) VALUES('Facultad de administración');
+    INSERT INTO schools (name) VALUES('Facultad de enfermería');
+    INSERT INTO schools (name) VALUES('Facultad de nutrición');
     
   -- Users
     INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Brandon Mosqueda', '20145969', 'bmosqueda@ucol.mx', "hola", 1, 1);
-    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Charley Jaculina', '10821935', 'plumiform@ucol.mx', "hola", 3, 1);
-    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Tia Bonhomme', '62613759', 'tbonhome@ucol.mx', "hola", 3, 1);
+    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Rebeca Flores', '10821935', 'rflores@ucol.mx', "hola", 3, 3);
+    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Isaac Ramírez', '62613759', 'iramirez@ucol.mx', "hola", 2, 5);
+    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Daniel Marmolejo', '62613759', 'dmarmolejo@ucol.mx', "hola", 1, 2);
 
   -- Authors
     INSERT INTO authors (name, alias, country_of_birth) VALUES('Zona Scharmann', 'Z. Scharmann', 'Philippines');
     INSERT INTO authors (name, alias, country_of_birth) VALUES('Etha Nikolai', 'E. Nikolai', 'Nicaragua');
-    INSERT INTO authors (name, alias, country_of_birth) VALUES('Simon Munks', 'S. Munks', 'South Sudan');
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Simon Munks', 'S. Munks', 'Fiji');
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Janyce Albaugh', 'J. Albaugh', 'Kyrgyzstan');
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Jefferson Huitink', 'J. Huitink', 'Bolivia');
 
   -- Repositories
-    INSERT INTO repositories (creator_id, name, url, tags) VALUES (1, 'El repo', 'url', 'los, tags, chidos');
-    INSERT INTO repositories (creator_id, name, url, tags) VALUES (1, 'El repo 2', 'url 2', 'los, tags, chidos 2');
+    INSERT INTO repositories (creator_id, name, description, url, tags) VALUES (1, 'El repo God overjudgment', 'Qui eu do consectetur ullamco consectetur non est dolor in labore deserunt culpa pariatur incididunt irure in quis consequat anim proident minim et enim occaecat in laborum dolor fugiat aute sunt anim exercitation ea consectetur labore in consequat cupidatat minim cupidatat elit quis dolore excepteur labore dolore occaecat exercitation reprehenderit commodo dolor sed aliqua quis occaecat in sed occaecat et ex id ad amet anim sunt in id anim labore cillum cupidatat sed eiusmod id minim velit consectetur ea non sint ut duis est laboris aliqua id tempor tempor nostrud voluptate eu deserunt laboris minim dolor dolor adipisicing laborum mollit cillum in voluptate velit laboris ad proident dolore proident consectetur nostrud sit enim occaecat irure do dolore est ullamco exercitation laborum nostrud sed sit nulla excepteur aliqua ex commodo sint reprehenderit laboris dolor anim non aliquip velit.', 'https://murmurously.com/superfunctional/necessariness?a=fattish&b=euphorbiaceae#eyehole', 'los, tags, chidos');
+    INSERT INTO repositories (creator_id, name, description, url, tags) VALUES (1, 'name', 'url', 'description', 'este, es un, tag');
 
   -- Resources
     INSERT INTO resources (title, description, size, repository_id, type, url) VALUES ('Recurso 1', 'description', 4, 1, 1, 'url');
@@ -168,8 +174,19 @@
     INSERT INTO categories_repository (repository_id, category_id) VALUES (2, 2);
 
   -- Area
-    INSERT INTO areas (name) VALUES('Area chida');
-    INSERT INTO areas (name) VALUES('Area chida 2');
+    INSERT INTO areas (name) VALUES('El área chida');
+    INSERT INTO areas (name) VALUES('welting');
+    INSERT INTO areas (name) VALUES('consequently');
+    INSERT INTO areas (name) VALUES('nongalactic');
+    INSERT INTO areas (name) VALUES('tetanospasmin');
+
+  -- Category
+    INSERT INTO categories (name) VALUES('La categoría chida');
+    INSERT INTO categories (name) VALUES('unpaintable');
+    INSERT INTO categories (name) VALUES('reunitable');
+    INSERT INTO categories (name) VALUES('hoodshyness');
+    INSERT INTO categories (name) VALUES('pensility');
+    INSERT INTO categories (name) VALUES('stimpert');
 
   -- Areas Resource
     INSERT INTO areas_resource (resource_id, area_id) VALUES (1, 1);

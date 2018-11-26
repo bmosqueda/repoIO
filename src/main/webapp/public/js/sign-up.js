@@ -20,7 +20,7 @@ const vue = new Vue({
   },
   mounted() {
     console.log("CREATED");
-    window.axios.get('/repo.io/api/schools')
+    window.axios.get('/repo.io/api/schools/all')
       .then(({data}) => {
         console.log(data);
         this.schools = data;
@@ -33,6 +33,14 @@ const vue = new Vue({
       });
   },
   methods: {
+    test() {
+      this.account = '20145969';
+      this.name = 'Brandon Mosqueda';
+      this.email = 'bmosqueda@ucol.mx';
+      this.school = 1;
+      this.password = 'hola';
+      this.confirmation = 'hola';
+    },
     signUp(ev) {
       ev.preventDefault();
 
@@ -74,10 +82,10 @@ const vue = new Vue({
       }
 
       let user = {
-        account: this.account,
+        account_number: this.account,
         name: this.name,
         email: this.email,
-        school: this.school,
+        school_id: this.school,
         password: this.password,
         confirmation: this.confirmation
       }
