@@ -12,7 +12,7 @@ const vue = new Vue({
     authors: [],
     categories: [],
     resource: {
-      name: '',
+      title: '',
       description: '',
       size: 1,
       type: 1,
@@ -21,6 +21,7 @@ const vue = new Vue({
       authors: []
     },
     onEdit: false,
+    isSaving: false,
     errors: {
       resource: [],
       repo: []
@@ -87,7 +88,7 @@ const vue = new Vue({
       }
 
       let tempRes = {
-          name: this.resource.name,
+          title: this.resource.title,
           description: this.resource.description,
           size: this.resource.size,
           type: this.resource.type,
@@ -126,7 +127,7 @@ const vue = new Vue({
       this.onEdit = false;
     },
     resetResource() {
-      this.resource.name = '';
+      this.resource.title = '';
       this.resource.description = '';
       this.resource.size = 1;
       this.resource.type = 1;
@@ -165,10 +166,13 @@ const vue = new Vue({
         this.errors.repo = ex.message.split('\n');
         return;
       }
-
+      this.isSaving = true;
+      console.log("Guardando");
       window.axios.post('/repo.io/api/repositories/', repo)
         .then(({data}) => {
+          this.isSaving = false;
           alert('Se creo correctamente');
+          location.href = "/repo.io/repositorio/ver/?id="+data.repository_id;
           console.log(data);
         })
         .catch(({response : {data : error}}) => {
@@ -181,7 +185,7 @@ const vue = new Vue({
       let random = Math.round(Math.random() * 1000);
 
       let tempResource = {
-        name: "Name "+random,
+        title: "Name "+random,
         description: "Laboris veniam ex sit id labore ex proident in consequat dolore aliquip culpa ad pariatur id labore sit nostrud aliqua amet labore dolor dolor nostrud adipisicing dolore proident est consequat magna labore amet culpa laborum.",
         size: random,
         type: Math.round(Math.random() * 3) + 1,

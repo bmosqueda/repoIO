@@ -46,6 +46,11 @@
                 </button>
               </p>
             </div>
+            <% if(Integer.parseInt(session.getAttribute("role_id").toString()) == 1) {%>
+              <a class="navbar-item has-text-weight-semibold" href="/repo.io/catalogos/">
+                Cat&aacute;logos
+              </a>
+            <% }%>
             <a class="navbar-item has-text-weight-semibold" href="/repo.io/repositorio/crear/">
               Crear repositorio
             </a>

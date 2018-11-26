@@ -18,11 +18,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import controllers.CategoryController;
+import controllers.KeywordController;
 import controllers.RepositoryController;
 import controllers.ResourceController;
 import models.Repository;
 import models.Resource;
 import models.Category;
+import models.Keyword;
 
 //Sets the path to base URL + /hello
 @Path("/repositories")
@@ -264,6 +266,28 @@ public class RepositoryAPI {
 			return Response.getJSONError(e.getMessage(), 400, res);
 		}
 		
+		//Insertar los tags
+		KeywordController keyController = new KeywordController();
+		String keys[] = repository.getTags().split(",");
+		for(String key : keys)
+		{
+			Keyword tempKey = new Keyword(KeywordController.keywordFormat(key.trim()));
+			try {
+				int key_id = keyController.getIdByKey(tempKey);
+				if(key_id == -1)
+				{
+					keyController.create(tempKey);
+					key_id = tempKey.getKeyword_id();
+				}
+				
+				repositoryController.insertKeywordRepository(repository.getRepository_id(), key_id);
+					
+			} catch (SQLException e) {
+				System.out.println("Problema al buscar o insertar keyword");
+				System.out.println(e.getMessage());
+			}
+		}
+		
 		//Insertar sus categorías
 		JSONArray categories = (JSONArray)json.get("categories");
 		
@@ -359,10 +383,9 @@ public class RepositoryAPI {
 				System.out.println(e.getMessage());
 			}
 		}
+		JSONObject jsonId = new JSONObject();
+		jsonId.put("repository_id", repository.getRepository_id());
 		
-		
-		
-		return Response.getJSONError("Todo chido", 200, res);
-		
+		return jsonId.toString();
 	}
 }

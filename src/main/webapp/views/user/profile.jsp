@@ -35,7 +35,11 @@
         v-if="user.repositories.length == 0"
       >Actualmente no tienes repositorios, puedes entrar <a href="/repo.io/repositorio/crear/">aqu&iacute;</a> para crear uno nuevo</h1>
       <div class="column is-8" id="col-left" v-else>
-        <table class="table">
+        <h1 
+          class="has-text-centered title is-4"
+          style="margin:auto;padding-top: 20px;padding-bottom: 15px;"
+        >Repositorios</h1>
+        <table class="table is-hoverable" style="width: 100%;">
           <thead>
             <th>Nombre</th>
             <th>URL</th>

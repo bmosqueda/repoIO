@@ -86,6 +86,16 @@
 		<url-pattern>/perfil/</url-pattern>
 	</servlet-mapping>
 	
+	<!-- Catálogos -->
+	<servlet>
+		<servlet-name>Catalogs</servlet-name>
+		<jsp-file>/views/catalog/crud.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Catalogs</servlet-name>
+		<url-pattern>/catalogos/</url-pattern>
+	</servlet-mapping>
+	
 	<!-- APIS -->
 	<servlet>
 		<servlet-name>Jersey REST Service</servlet-name>

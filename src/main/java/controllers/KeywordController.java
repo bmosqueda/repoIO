@@ -47,6 +47,27 @@ public class KeywordController extends Controller {
 
     return keyword;
   }
+  
+  public int getIdByKey(Keyword key) throws ClassNotFoundException, SQLException {
+	    this.open();
+
+	    String sql = "SELECT keyword_id FROM keywords WHERE keyword = ?";
+	    String keyword = this.keywordFormat(key.getKeyword().trim());
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+	    stament.setString(1, keyword);
+	    
+	    ResultSet resultSet = stament.executeQuery();
+	    int result = -1;
+	    		
+	    if (resultSet.next())
+	     result = resultSet.getInt("keyword_id");
+	    
+	    resultSet.close();
+	    this.close();
+	    
+	    return result;
+	  }
 
   public boolean create(Keyword keyword) throws SQLException, ClassNotFoundException {
     keyword.setKeyword(keywordFormat(keyword.getKeyword()));

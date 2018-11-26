@@ -22,7 +22,7 @@ const app = new Vue({
         console.log(error.error);
       });
 
-    //Pedir los repositorios
+    //Pedir las categorías
     window.axios.get('/repo.io/api/categories/all')
       .then(({data}) => {
         this.categories = data;
@@ -32,7 +32,7 @@ const app = new Vue({
         console.log(error.error);
       });
 
-    //Pedir los repositorios
+    //Pedir las áreas
     window.axios.get('/repo.io/api/areas/all')
       .then(({data}) => {
         this.areas = data;

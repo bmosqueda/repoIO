@@ -1,7 +1,7 @@
 <% 
 //Ya está loggueado
-if(session.getAttribute("email") != null)
-	response.sendRedirect("/repo.io/buscar/");
+response.sendRedirect("/repo.io/iniciar-sesion/");
+// if(session.getAttribute("email") != null)
 %>
 <%! String title = "Repo.io"; %>
 <%@ include file="/views/header-no-session.jsp"%>

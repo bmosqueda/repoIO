@@ -131,7 +131,14 @@
           <p class="help feed is-danger" v-for="err in errors.repo">{{err}}</p>
           <div class="field">
             <div class="control">
-              <a class="button is-primary is-block is-alt is-large" @click="addRepository">Guardar</a>
+              <a 
+                v-if="!isSaving"
+                class="button is-primary is-block is-alt is-large" 
+                @click="addRepository">Guardar</a>
+              <a 
+                v-else
+                class="button is-loading is-primary is-block is-alt is-large" 
+                >Cargando</a>
             </div>
           </div>              
         </div>
@@ -148,7 +155,7 @@
                 <div class="card">
                   <header class="card-header">
                     <p class="card-header-title">
-                      {{res.name}}
+                      {{res.title}}
                     </p>
                     <a class="card-header-icon" @click="foldResource(res)" aria-label="more options">
                       <span class="icon">
@@ -202,7 +209,7 @@
             <div class="field">
               <label class="label modal-label">T&iacute;tulo<span class="has-text-danger">*</span></label>
               <div class="control">
-                <input class="input" type="text" placeholder="T&iacute;tulo" v-model="resource.name">
+                <input class="input" type="text" placeholder="T&iacute;tulo" v-model="resource.title">
               </div>
             </div>
 
