@@ -94,4 +94,51 @@ public class CategoryController extends Controller {
 
       return (Category[]) categories.toArray(new Category[categories.size()]);
     }
+
+  public boolean update(Category category) throws SQLException, ClassNotFoundException {
+      String sql = "UPDATE categories SET name = '"+this.escapeString(category.getName())+"' WHERE category_id = "+category.getCategory_id();
+
+      this.open();
+
+      PreparedStatement stament = this.connector.prepareStatement(sql);
+
+      int rows = stament.executeUpdate(sql);
+
+      stament.close();
+      this.close();
+
+      return rows > 0;
+  }
+  
+  public boolean delete(Category category) throws SQLException, ClassNotFoundException {
+      String sql = "DELETE FROM categories WHERE category_id = "+category.getCategory_id();
+      this.open();
+
+      PreparedStatement stament = this.connector.prepareStatement(sql);
+
+      int rows = stament.executeUpdate(sql);
+
+      stament.close();
+      this.close();
+
+      return rows > 0;
+  }
+  
+  public boolean hasChilds(Category category) throws SQLException, ClassNotFoundException {
+      String sql = "SELECT COUNT(*) AS childs FROM categories_repository WHERE category_id = "+category.getCategory_id();
+
+      this.open();
+
+      PreparedStatement stament = this.connector.prepareStatement(sql);
+      ResultSet resultSet = stament.executeQuery();
+      
+      boolean result = false;
+      if (resultSet.next())
+          result = resultSet.getInt("childs") > 0;
+
+      resultSet.close();
+      this.close();
+
+      return result;
+  }
 }

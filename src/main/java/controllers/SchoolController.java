@@ -72,4 +72,50 @@ public class SchoolController extends Controller {
 		return result;
 	}
 
+	public boolean update(School school) throws SQLException, ClassNotFoundException {
+	    String sql = "UPDATE schools SET name = '"+this.escapeString(school.getName())+"' WHERE school_id = "+school.getSchool_id();
+
+	    this.open();
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+
+	    int rows = stament.executeUpdate(sql);
+
+	    stament.close();
+	    this.close();
+
+	    return rows > 0;
+	}
+	
+	public boolean delete(School school) throws SQLException, ClassNotFoundException {
+	    String sql = "DELETE FROM schools WHERE school_id = "+school.getSchool_id();
+	    this.open();
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+
+	    int rows = stament.executeUpdate(sql);
+
+	    stament.close();
+	    this.close();
+
+	    return rows > 0;
+	}
+	
+	public boolean hasChilds(int school_id) throws SQLException, ClassNotFoundException {
+	    String sql = "SELECT COUNT(*) AS childs FROM users WHERE school_id = "+school_id;
+
+	    this.open();
+
+	    PreparedStatement stament = this.connector.prepareStatement(sql);
+	    ResultSet resultSet = stament.executeQuery();
+	    
+	    boolean result = false;
+	    if (resultSet.next())
+	        result = resultSet.getInt("childs") > 0;
+
+	    resultSet.close();
+	    this.close();
+
+	    return result;
+	}
 }
