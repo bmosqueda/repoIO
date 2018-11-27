@@ -72,7 +72,7 @@
       <div class="field is-grouped" style="margin-top:12px;">
         <div class="control is-expanded">
           <input 
-            class="input" 
+            class="input is-primary" 
             type="text" 
             placeholder="Etiquetas" 
             v-model="tags" 
