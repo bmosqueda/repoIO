@@ -50,10 +50,10 @@
               <a class="navbar-item has-text-weight-semibold" href="/repo.io/catalogos/">
                 Cat&aacute;logos
               </a>
+              <a class="navbar-item has-text-weight-semibold" href="/repo.io/repositorio/crear/">
+                Crear repositorio
+              </a>
             <% }%>
-            <a class="navbar-item has-text-weight-semibold" href="/repo.io/repositorio/crear/">
-              Crear repositorio
-            </a>
             <!-- <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
                 Repositorios

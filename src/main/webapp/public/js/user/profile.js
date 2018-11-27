@@ -84,6 +84,21 @@ const app = new Vue({
           console.log(error);
           console.log(error.error);
         });
+    },
+    deleteRepo(index) {
+      let repo = this.user.repositories[index];
+
+      if(confirm('¿Estás seguro que quieres eliminar el repositorio: '+ repo.name + '. \nNo podrás recuperar su información')) {
+        window.axios.delete('/repo.io/api/repositories/'+ repo.repository_id)
+          .then(({data}) => {
+            this.user.repositories.splice(index, 1);
+          })
+          .catch(({response : {data : error}}) => {
+            console.error("Hubo un problema al eliminar el repositorio");
+            console.log(error);
+            console.log(error.error);
+          });
+      }
     }
   }
 });

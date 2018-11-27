@@ -2,6 +2,34 @@
 <%@ include file="../require-session.jsp"%>
 <%! String title = "Mi perfil"; %>
 <%@ include file="../header.jsp"%>
+<% if(Integer.parseInt(session.getAttribute("role_id").toString()) != 1) { %>
+  <br>
+  <br>
+  <div class="columns" id="app"> 
+    <!-- User info -->
+      <div class="column has-background-light is-8 is-offset-2" id="col-repo">
+        <figure class="avatar has-text-centered">
+          <img src="https://placehold.it/128x128">
+        </figure>
+
+        <h1 class="title is-3"><%= session.getAttribute("name").toString() %></h1>
+
+        <h1 class="title is-5">N&uacute;mero de cuenta</h1>
+        <h1 class="subtitle"><%= session.getAttribute("account_number").toString() %></h1>
+        <hr>
+
+        <h1 class="title is-5">Correo electr&oacute;nico</h1>
+        <h1 class="subtitle"><%= session.getAttribute("email").toString() %></h1>
+        <hr>
+
+        <h1 class="title is-5">Escuela</h1>
+        <h1 class="subtitle"><%= session.getAttribute("school_name").toString() %></h1>
+        <hr>
+
+      </div>
+    <!-- User info END -->
+  </div>
+<% } else { %>
 <link rel="stylesheet" href="/repo.io/public/css/profile.css" />
 
   <div class="columns" id="app"> 
@@ -34,20 +62,22 @@
         style="margin:auto;padding-top: 50px;"
         v-if="user.repositories.length == 0"
       >Actualmente no tienes repositorios, puedes entrar <a href="/repo.io/repositorio/crear/">aqu&iacute;</a> para crear uno nuevo</h1>
-      <div class="column is-8" id="col-left" v-else>
+      <div class="column is-8" style="overflow-x: auto;" id="col-left" v-else>
         <h1 
           class="has-text-centered title is-4"
           style="margin:auto;padding-top: 20px;padding-bottom: 15px;"
         >Repositorios</h1>
         <table class="table is-hoverable" style="width: 100%;">
           <thead>
-            <th>Nombre</th>
-            <th>URL</th>
-            <th>Descripci&oacute;n</th>
-            <th>Detalles</th>
+            <tr>
+              <th>Nombre</th>
+              <th>URL</th>
+              <th>Descripci&oacute;n</th>
+              <th>Opciones</th>
+            </tr>
           </thead>
           <tbody>
-            <tr v-for="repo in user.repositories">
+            <tr v-for="(repo, index) in user.repositories">
               <td>{{repo.name}}</td>
               <td><a :href="repo.url">{{repo.url}}</a></td>
               <td>{{repo.description}}</td>
@@ -56,6 +86,10 @@
                   <i class="fas fa-info-circle"></i>
                   &nbsp;Detalles
                 </button>
+                <!-- <button class="button is-danger" @click="deleteRepo(index)">
+                  <i class="fa fa-trash"></i>
+                  &nbsp;Eliminar
+                </button> -->
               </td>
             </tr>
           </tbody>
@@ -102,8 +136,10 @@
       </div>
     <!-- Repo details END -->
   </div>
-
+<% } %>
 <%@ include file="../footer.jsp"%>
-<script src="/repo.io/public/js/user/profile.js"></script>
+<% if(Integer.parseInt(session.getAttribute("role_id").toString()) == 1) { %>
+  <script src="/repo.io/public/js/user/profile.js"></script>
+<% } %>
 </body>
 </html>

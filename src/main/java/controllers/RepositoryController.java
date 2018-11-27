@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import models.Area;
 import models.Repository;
 
 public class RepositoryController extends Controller {
@@ -408,4 +409,21 @@ public class RepositoryController extends Controller {
 
 		return result;
 	}
+
+	public boolean delete(int repository_id) throws SQLException, ClassNotFoundException {
+		  String sql = "DELETE FROM repositories WHERE repository_id = "+repository_id;
+
+		  this.open();
+
+		  PreparedStatement stament = this.connector.prepareStatement(sql);
+		  //stament.setString(1, area.getName());
+		  //stament.setInt(2, area.getArea_id());
+
+		  int rows = stament.executeUpdate(sql);
+
+		  stament.close();
+		  this.close();
+
+		  return rows > 0;
+	  }
 }

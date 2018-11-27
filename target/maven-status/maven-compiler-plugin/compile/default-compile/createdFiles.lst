@@ -7,7 +7,6 @@ controllers/Controller.class
 models/School.class
 models/Area.class
 models/Author.class
-models/Resource$TYPE.class
 apis/ResourceAPI.class
 apis/AuthorAPI.class
 models/Resource.class

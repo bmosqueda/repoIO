@@ -127,9 +127,12 @@ public class UserAPI {
 		session = req.getSession(true);
 
 		session.setAttribute("user_id", user.getUser_id());
+		session.setAttribute("account_number", user.getAccount_number());
 		session.setAttribute("email", user.getEmail());
+		session.setAttribute("name", user.getName());
 		session.setAttribute("role_id", user.getRole());
 		session.setAttribute("school_id", user.getSchool_id());
+		session.setAttribute("school_name", user.getSchool_name());
 
 		return user.toJSON();
 	}

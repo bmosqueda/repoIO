@@ -45,6 +45,9 @@ const app = new Vue({
   methods: {
     formatTags(){
       for (var i = this.repositories.length - 1; i >= 0; i--) {
+        if(this.repositories[i].description.length > 100)
+          this.repositories[i].description = this.repositories[i].description.substring(0, 100) + '...';
+
         for (var j = this.repositories[i].tags.length - 1; j >= 0; j--) {
           let tempTag = {
             tag: this.repositories[i].tags[j],

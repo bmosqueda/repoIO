@@ -8,8 +8,9 @@
     }
 
     .card-content {
-      height: 300px;
+      height: 180px;
       overflow: hidden;
+      background-color: #ecf9ff;
     }
 
     .is-shady {
@@ -100,7 +101,7 @@
           >Repositorios</h1>
         <div class="columns is-multiline">
           <div class="column is-half" v-for="repo in repositories">
-            <div class="card is-shady">
+            <!-- <div class="card is-shady">
               <header class="card-header">
                 <p class="card-header-title">
                   {{repo.name}}
@@ -124,15 +125,25 @@
                   <strong><p>Descripci&oacute;n</p></strong>
                   <p>{{repo.description}}</p>
                   <br>
-                  <!-- <strong><p>Categorías</p></strong>
-                  <div class="tags">
-                    <span class="tag" v-for="cat in repo.categories">{{cat.name}}</span>
-                  </div> -->
                 </div>
               </div>
               <footer class="card-footer">
                 <a :href="'/repo.io/repositorio/ver/?id=' + repo.repository_id" class="card-footer-item">Ver más</a>
               </footer>
+            </div> -->
+            <div class="card is-shady">
+              <div class="card-content">
+                <div class="media">
+                  <p class="title is-4">
+                    <a :href="'/repo.io/repositorio/ver/?id=' + repo.repository_id">{{repo.name}}</a>
+                  </p>
+                </div>
+                <div class="content">
+                  <strong><p>Descripci&oacute;n</p></strong>
+                  {{repo.description}}
+                  <br>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -121,7 +121,7 @@ public class ResourceController extends Controller {
     stament.setString(2, resource.getDescription());
     stament.setInt(3, resource.getSize());
     stament.setInt(4, resource.getRepository_id());
-    stament.setInt(5, resource.getType().getIndex());
+    stament.setInt(5, resource.getType());
     stament.setString(6, resource.getUrl());
 
     stament.executeQuery();

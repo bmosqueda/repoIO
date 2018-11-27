@@ -153,7 +153,7 @@
   -- Users
     INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Brandon Mosqueda', '20145969', 'bmosqueda@ucol.mx', "hola", 1, 1);
     INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Rebeca Flores', '10821935', 'rflores@ucol.mx', "hola", 3, 3);
-    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Isaac Ramírez', '62613759', 'iramirez@ucol.mx', "hola", 2, 5);
+    INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Isaac Ramírez', '62613759', 'iramirez@ucol.mx', "hola", 3, 5);
     INSERT INTO users (name, account_number, email, password, role, school_id) VALUES('Daniel Marmolejo', '62613759', 'dmarmolejo@ucol.mx', "hola", 1, 2);
 
   -- Authors
@@ -162,6 +162,9 @@
     INSERT INTO authors (name, alias, country_of_birth) VALUES('Simon Munks', 'S. Munks', 'Fiji');
     INSERT INTO authors (name, alias, country_of_birth) VALUES('Janyce Albaugh', 'J. Albaugh', 'Kyrgyzstan');
     INSERT INTO authors (name, alias, country_of_birth) VALUES('Jefferson Huitink', 'J. Huitink', 'Bolivia');
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Odelia Urtz', 'O. Urtz', 'South Sudan');
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Catrina Strozier', 'C. Strozier', 'Mozambique');
+    INSERT INTO authors (name, alias, country_of_birth) VALUES('Yanira Maniatis', 'Y. Maniatis', 'Bulgaria');
 
   -- Repositories
     INSERT INTO repositories (creator_id, name, description, url, tags) VALUES (1, 'El repo God overjudgment', 'Qui eu do consectetur ullamco consectetur non est dolor in labore deserunt culpa pariatur incididunt irure in quis consequat anim proident minim et enim occaecat in laborum dolor fugiat aute sunt anim exercitation ea consectetur labore in consequat cupidatat minim cupidatat elit quis dolore excepteur labore dolore occaecat exercitation reprehenderit commodo dolor sed aliqua quis occaecat in sed occaecat et ex id ad amet anim sunt in id anim labore cillum cupidatat sed eiusmod id minim velit consectetur ea non sint ut duis est laboris aliqua id tempor tempor nostrud voluptate eu deserunt laboris minim dolor dolor adipisicing laborum mollit cillum in voluptate velit laboris ad proident dolore proident consectetur nostrud sit enim occaecat irure do dolore est ullamco exercitation laborum nostrud sed sit nulla excepteur aliqua ex commodo sint reprehenderit laboris dolor anim non aliquip velit.', 'https://murmurously.com/superfunctional/necessariness?a=fattish&b=euphorbiaceae#eyehole', 'los, tags, chidos');
@@ -174,19 +177,34 @@
     INSERT INTO categories_repository (repository_id, category_id) VALUES (2, 2);
 
   -- Area
-    INSERT INTO areas (name) VALUES('El área chida');
-    INSERT INTO areas (name) VALUES('welting');
-    INSERT INTO areas (name) VALUES('consequently');
-    INSERT INTO areas (name) VALUES('nongalactic');
-    INSERT INTO areas (name) VALUES('tetanospasmin');
+    INSERT INTO areas (name) VALUES('Matemáticas');
+    INSERT INTO areas (name) VALUES('Ciencias');
+    INSERT INTO areas (name) VALUES('Tecnología');
+    INSERT INTO areas (name) VALUES('Conocimiento');
+    INSERT INTO areas (name) VALUES('Filosofía');
+    INSERT INTO areas (name) VALUES('Arte');
+    INSERT INTO areas (name) VALUES('Salud');
+    INSERT INTO areas (name) VALUES('Música');
+    INSERT INTO areas (name) VALUES('Memes');
+    INSERT INTO areas (name) VALUES('Deporte');
+    INSERT INTO areas (name) VALUES('Lectura');
+    INSERT INTO areas (name) VALUES('Programación');
+    INSERT INTO areas (name) VALUES('Diseño');
+    INSERT INTO areas (name) VALUES('Entretenimiento');
 
   -- Category
-    INSERT INTO categories (name) VALUES('La categoría chida');
-    INSERT INTO categories (name) VALUES('unpaintable');
-    INSERT INTO categories (name) VALUES('reunitable');
-    INSERT INTO categories (name) VALUES('hoodshyness');
-    INSERT INTO categories (name) VALUES('pensility');
-    INSERT INTO categories (name) VALUES('stimpert');
+    INSERT INTO categories (name) VALUES('Ingerniería');
+    INSERT INTO categories (name) VALUES('Computación');
+    INSERT INTO categories (name) VALUES('Medicina');
+    INSERT INTO categories (name) VALUES('Derecho');
+    INSERT INTO categories (name) VALUES('Leyes');
+    INSERT INTO categories (name) VALUES('Memes');
+    INSERT INTO categories (name) VALUES('Idiomas');
+    INSERT INTO categories (name) VALUES('Educación');
+    INSERT INTO categories (name) VALUES('Cuerpo humano');
+    INSERT INTO categories (name) VALUES('Arquitectura');
+    INSERT INTO categories (name) VALUES('Bellas artes');
+    INSERT INTO categories (name) VALUES('Ciencias sociales');
 
   -- Areas Resource
     INSERT INTO areas_resource (resource_id, area_id) VALUES (1, 1);
