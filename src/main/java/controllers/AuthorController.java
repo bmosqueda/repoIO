@@ -127,4 +127,51 @@ public class AuthorController extends Controller {
 	    return (Author[]) authors.toArray(new Author[authors.size()]);
 	  }
 
+  public boolean update(Author author) throws SQLException, ClassNotFoundException {
+      String sql = "UPDATE authors SET name = '"+this.escapeString(author.getName())+"', alias = '"+this.escapeString(author.getAlias())+"', country_of_birth = '"+this.escapeString(author.getCountry_of_birth())+"' "
+      		+ "WHERE author_id = "+author.getAuthor_id();
+
+      this.open();
+
+      PreparedStatement stament = this.connector.prepareStatement(sql);
+
+      int rows = stament.executeUpdate(sql);
+
+      stament.close();
+      this.close();
+
+      return rows > 0;
+  }
+
+  public boolean delete(Author author) throws SQLException, ClassNotFoundException {
+      String sql = "DELETE FROM authors WHERE author_id = "+author.getAuthor_id();
+      this.open();
+
+      PreparedStatement stament = this.connector.prepareStatement(sql);
+
+      int rows = stament.executeUpdate(sql);
+
+      stament.close();
+      this.close();
+
+      return rows > 0;
+  }
+
+  public boolean hasChilds(Author author) throws SQLException, ClassNotFoundException {
+      String sql = "SELECT COUNT(*) AS childs FROM authors_resource WHERE author_id = "+author.getAuthor_id();
+
+      this.open();
+
+      PreparedStatement stament = this.connector.prepareStatement(sql);
+      ResultSet resultSet = stament.executeQuery();
+      
+      boolean result = false;
+      if (resultSet.next())
+          result = resultSet.getInt("childs") > 0;
+
+      resultSet.close();
+      this.close();
+
+      return result;
+  }
 }

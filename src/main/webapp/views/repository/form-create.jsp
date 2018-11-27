@@ -62,6 +62,7 @@
     padding: 5px;
   }
 </style>
+<link rel="stylesheet" href="/repo.io/public/css/autocomplete-input.css">
 <div id="app">
   <section class="container">
     <div class="columns">
@@ -199,7 +200,7 @@
   
   <!-- Modal section -->
     <div v-bind:class="{'is-active' : isModalVisible, modal : true}">
-      <div class="modal-background"></div>
+      <div class="modal-background" @click="isModalVisible = false"></div>  
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Agregar recurso</p>
@@ -251,30 +252,40 @@
             <label class="label modal-label">Autores</label>
             <div class="field is-grouped">
               <p class="control is-expanded">
-                <input class="input" type="text" placeholder="Autores" list="authorsList">
-                  <datalist id="authorsList">
-                    <option v-for="author in authors" :value="author.author_id">{{author.name}}</option>
-                  </datalist>
+                <input 
+                  class="input" 
+                  type="text" 
+                  placeholder="Autores" 
+                  list="authorsList"
+                  v-model="selectedAuthor"
+                  @keypress.enter="pushAuthor"
+                >
+                <datalist id="authorsList">
+                  <option v-for="author in authorsTemp" :value="author.name">{{author.name}}</option>
+                </datalist>
               </p>
               <p class="control">
-                <button class="button is-success" @click="pushAuthor">Buscar</button>
+                <button class="button is-success" @click="pushAuthor">Agregar</button>
               </p>
             </div>
+            <p class="help feed is-danger">{{errors.author}}</p>
             
-            <table :class="{table: true, 'is-hidden': authors.length == 0}" style="width: 100%;">
+            <table :class="{table: true, 'is-hidden': resource.authors.length == 0}" style="width: 100%;">
               <thead>
                   <tr>
                     <th>Nombre</th>
                     <th>Alias</th>
-                    <th>Agregar</th>
+                    <th>Eliminar</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="author in authors">
+                  <tr v-for="(author, index) in resource.authors">
                     <th>{{author.name}}</th>
                     <th>{{author.alias}}</th>
                     <th>
-                      <button :value="author.author_id" class="button is-info">Agregar</button>
+                      <button @click="deleteAuthor(index)" class="button is-danger">
+                        <i class="fa fa-trash"></i>&nbsp;Eliminar
+                      </button>
                     </th>
                   </tr>
                 </tbody>

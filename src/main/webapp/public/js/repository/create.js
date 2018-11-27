@@ -5,11 +5,13 @@ const vue = new Vue({
     description: '',
     url: '',
     tags: '',
+    selectedAuthor: '',
     repoCategories: [],
     isModalVisible : false,
     resources: [],
     areas: [],
     authors: [],
+    authorsTemp: [], //Para cada que se va a crear un recurso
     categories: [],
     resource: {
       title: '',
@@ -24,6 +26,7 @@ const vue = new Vue({
     isSaving: false,
     errors: {
       resource: [],
+      author: '',
       repo: []
     },
     validationRules: {
@@ -93,6 +96,7 @@ const vue = new Vue({
           size: this.resource.size,
           type: this.resource.type,
           url: this.resource.url,
+          authors: this.resource.authors,
           areas: this.resource.areas,
           visible: false
         };
@@ -115,11 +119,7 @@ const vue = new Vue({
       this.resources.splice(index, 1);
     },
     foldResource(res) {
-      console.log(res.name);
-      console.log(res.url);
-      console.log(res.visible);
       res.visible = !res.visible;
-      console.log(res.visible);
     },
     showAdd() {
       this.resetResource();
@@ -134,21 +134,39 @@ const vue = new Vue({
       this.resource.url = '';
       this.resource.areas = [];
       this.resource.authors = [];
+      this.authorsTemp = this.authors.map((a) => a);
 
       this.errors.resource = [];
     },
     pushAuthor() {
+      let name = this.selectedAuthor.trim().toLowerCase();
 
-      /*if(!isNaN(this.resource.author))
-        this.resource.authors.push({isNew: false, author_id: this.resource.author, name: ''});
-      else 
-        this.resource.authors.push({isNew: true, author_id: 0, name: this.resource.author});
-      */
+      for (var i = this.authorsTemp.length - 1; i >= 0; i--) {
+        if(this.authorsTemp[i].name.toLowerCase() == name)
+        {
+          this.resource.authors.push(this.authorsTemp[i]);
+          this.authorsTemp.splice(i, 1);
+          this.selectedAuthor = '';
+          return;
+        }
+      }
+
+      this.errors.author = 'No se encontró ningún autor con ese nombre';
+
+      setTimeout(() => this.errors.author = '', 2000);
+    },
+    deleteAuthor(index) {
+      this.authorsTemp.push( this.resource.authors[index] );
+      this.resource.authors.splice(index, 1);
     },
     addRepository() {
       if(this.resources.length === 0)
         if(!(confirm('¿Quieres agregar un repositorio sin recursos?')))
           return;
+
+      for (var i = this.resources.length - 1; i >= 0; i--) 
+        for (var j = this.resources[i].authors.length - 1; j >= 0; j--) 
+          this.resources[i].authors[j] = this.resources[i].authors[j].author_id;
 
       let repo = {
         name: this.name,

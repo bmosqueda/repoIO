@@ -30,6 +30,9 @@
                   <li class="tab" onclick="openTab(event,'tabCategory')">
                     <a>Categor&iacute;as</a>
                   </li>
+                  <li class="tab" onclick="openTab(event,'tabAuthor')">
+                    <a>Autores</a>
+                  </li>
                 </ul>
              </div>
           </nav>
@@ -110,7 +113,7 @@
         </div>
       <!-- TAB AREAS  END-->
 
-      <!-- TAB CATEGORYS -->
+      <!-- TAB CATEGORIES -->
         <div id="tabCategory" class="content-tab" style="display:none">
           <div class="columns" style="margin-top: 2rem;">
             <div class="column is-6 is-offset-3">
@@ -182,10 +185,10 @@
             </table>
           </div>
         </div>
-      <!-- TAB CategoryS  END-->
+      <!-- TAB CATEGORIES  END-->
 
       <!-- TAB schools -->
-        <div id="tabSchool" class="content-tab" >
+        <div id="tabSchool" class="content-tab" style="display:none">
           <div class="columns" style="margin-top: 2rem;">
             <div class="column is-6 is-offset-3">
               <div class="field">
@@ -257,6 +260,114 @@
           </div>
         </div>
       <!-- TAB schools  END-->
+
+      <!--  TAB authors -->
+        <div id="tabAuthor" class="content-tab" style="display:none">
+          <div class="columns" style="margin-top: 2rem;">
+            <div class="column is-6 is-offset-3">
+              <!-- Nombre -->
+              <div class="field">
+                <label class="label">Nombre del autor</label>
+                <div class="control">
+                  <input 
+                    class="input" 
+                    v-on:keyup.enter="addAuthor" 
+                    type="text" 
+                    v-model="newAuthor.name" 
+                    maxlength="100" 
+                    placeholder="Nombre del autor">
+                </div>
+                <p class="help is-danger">{{errors.alias}}</p>
+              </div>
+              <!-- Alias -->
+              <div class="field">
+                <label class="label">Alias</label>
+                <div class="control">
+                  <input 
+                    class="input" 
+                    v-on:keyup.enter="addAuthor" 
+                    type="text" 
+                    v-model="newAuthor.alias" 
+                    maxlength="100" 
+                    placeholder="Alias del autor">
+                </div>
+                <p class="help is-danger">{{errors.alias}}</p>
+              </div>
+              <!-- Country of birth -->
+              <div class="field">
+                <label class="label">Pa&iacute;s de nacimiento</label>
+                <div class="control">
+                  <input 
+                    class="input" 
+                    v-on:keyup.enter="addAuthor" 
+                    type="text" 
+                    v-model="newAuthor.country_of_birth" 
+                    maxlength="100" 
+                    placeholder="Pa&iacute;s de nacimiento">
+                </div>
+                <p class="help is-danger">{{errors.country_of_birth}}</p>
+              </div>
+              <!-- Button -->
+              <div class="field">
+                <div class="control">
+                  <input 
+                    class="button is-success is-pulled-right" 
+                    @click="addAuthor" 
+                    v-if="onEditAuthor == -1"
+                    type="button" 
+                    value="Agregar">
+
+                  <input 
+                    class="button is-link is-pulled-right" 
+                    @click="addAuthor" 
+                    v-else
+                    type="button" 
+                    value="Editar">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="columns">
+            <table class="table is-fullwidth is-hoverable">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Alias</th>
+                  <th>Pa&iacute;s de nacimiento</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(author, index) in authors">
+                  <td>{{author.name}}</td>
+                  <td>{{author.alias}}</td>
+                  <td>{{author.country_of_birth}}</td>
+                  <td>
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-link is-small" @click="toggleEditAuthor(index)">
+                          <span class="icon is-small">
+                            <i class="fa fa-edit"></i>
+                          </span>
+                          <span>Editar</span>
+                        </a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-small is-danger" @click="deleteAuthor(index)">
+                          <span class="icon is-small">
+                            <i class="fa fa-trash"></i>
+                          </span>
+                          <span>Eliminar</span>
+                        </a>
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <!-- TAB authors  END -->
     </div>
   </div>
 

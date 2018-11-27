@@ -255,5 +255,121 @@ const appSchool = new Vue({
     }
   }
 });
+
+const appAuthor = new Vue({
+  el: "#tabAuthor",
+  data: {
+    authors: [],
+    newAuthor: {
+      name: '',
+      alias: '',
+      country_of_birth: ''
+    },
+    onEditAuthor: -1,
+    errors: {
+      name: '',
+      alias: '',
+      country_of_birth: ''
+    }
+  },
+  created(){
+    //Pedir las áreas
+    window.axios.get('/repo.io/api/authors/all')
+      .then(({data}) => {
+        this.authors = data;
+      })
+      .catch(({response : {data : error}}) => {
+        console.error("Hubo un problema al obtener los autores");
+        console.log(error.error);
+      });
+  },
+  methods: {
+    addAuthor() {
+      let name = this.newAuthor.name.trim();
+      let alias = this.newAuthor.alias.trim();
+      let country_of_birth = this.newAuthor.country_of_birth.trim();
+
+      if(name === '') {
+        this.errors.name = 'Por favor ingresa un nombre';
+        return;
+      }
+      else if(alias === '') {
+        this.errors.alias = 'Por favor ingresa un alias';
+        return;
+      }
+      if(country_of_birth === '') {
+        this.errors.country_of_birth = 'Por favor ingresa un país de nacimiento';
+        return;
+      }
+
+      if(this.onEditAuthor == -1){
+        window.axios.post('/repo.io/api/authors', {name: name, alias: alias, country_of_birth: country_of_birth})
+          .then(({data}) => {
+            this.authors.push(data);
+          })
+          .catch(({response : {data : error}}) => {
+            console.error("Hubo un problema al crea el autor");
+            console.log(error.error);
+          });
+      }
+      else
+        this.editAuthor();
+      this.newAuthor = '';
+    },
+    editAuthor() {
+      let name = this.newAuthor.name.trim();
+      let alias = this.newAuthor.alias.trim();
+      let country_of_birth = this.newAuthor.country_of_birth.trim();
+
+      if(name === '') {
+        this.errors.name = 'Por favor ingresa un nombre';
+        return;
+      }
+      else if(alias === '') {
+        this.errors.alias = 'Por favor ingresa un alias';
+        return;
+      }
+      if(country_of_birth === '') {
+        this.errors.country_of_birth = 'Por favor ingresa un país de nacimiento';
+        return;
+      }
+
+      window.axios.put('/repo.io/api/authors/'+this.authors[this.onEditAuthor].author_id, {name: name, alias: alias, country_of_birth: country_of_birth})
+        .then(({data}) => {
+          this.authors[this.onEditAuthor].name = name;
+          this.newAuthor = {
+            name: '',
+            alias: '',
+            country_of_birth: ''
+          };
+          this.onEditAuthor = -1;
+        })
+        .catch(({response : {data : error}}) => {
+          console.error("Hubo un problema al crear el autor");
+          console.log(error.error);
+        });
+
+    },
+    deleteAuthor(index) {
+      window.axios.delete('/repo.io/api/authors/'+this.authors[index].author_id)
+        .then(({data}) => {
+          this.authors.splice(index, 1);
+        })
+        .catch(({response : {data : error}}) => {
+          console.error("Hubo un problema al eliminar el autor");
+          console.log(error.error);
+          alert(error.error);
+        });
+    },
+    toggleEditAuthor(index) {
+      this.onEditAuthor = index;
+      this.newAuthor = this.authors[index];
+    },
+    existsAuthor(name) {
+      name = name.toLowerCase().trim();
+      return this.authors.findIndex(author => author.name.toLowerCase() === name) != -1;
+    }
+  }
+});
 // For tabs
 function openTab(evt, tabName) {var i, x, tablinks; x = document.getElementsByClassName("content-tab"); for (i = 0; i < x.length; i++) {x[i].style.display = "none"; } tablinks = document.getElementsByClassName("tab"); for (i = 0; i < x.length; i++) {tablinks[i].className = tablinks[i].className.replace(" is-active", ""); } document.getElementById(tabName).style.display = "block"; evt.currentTarget.className += " is-active";}

@@ -377,6 +377,31 @@ public class RepositoryAPI {
 					}
 				}
 				
+				//Insertar los autores del recurso
+				JSONArray authors = (JSONArray)resTemp.get("authors");
+				
+				if(authors != null)
+				{
+					int authorsCount = authors.size();
+					
+					for(int j = 0; j < authorsCount; j++)
+					{
+						Object authorId = authors.get(j);
+						
+						if(authorId == null)
+							continue;
+						else if(!this.repositoryController.isInt(authorId.toString()))
+							continue;
+						
+						try {
+							resController.insertAuthorResource(resource.getResource_id(), Integer.parseInt(authorId.toString()));
+						} catch (SQLException e) {
+							System.out.println("Hubo un problem al guardar el autor : " + authorId.toString() + " del recuros " + resource.getResource_id());
+							System.out.println(e.getMessage());
+						}
+					}
+				}
+				
 				
 			} catch (SQLException e) {
 				System.out.println("Hubo un problem al guardar el recurso: ");
