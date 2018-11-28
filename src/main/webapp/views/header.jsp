@@ -20,7 +20,7 @@
       <nav class="navbar is-link ">
         <div class="navbar-brand">
           <a class="navbar-item" href="/repo.io/  ">
-            <img class="logo-no-mobile" src="/public/images/Logos/logo-10.jpeg" alt="Repo.IO"  width="300" height="2000">
+            <img class="logo-no-mobile" src="/repo.io/public/images/solus-logo.png" alt="Repo.IO">
             <!-- <figure class="logo-mobile image is-32x32 is-pulled-right text-mobile">
               <img src="/public/images/Logos/transparent-ico.png" alt="Sociedad Patrimonial 2018 ©">
           </figure> -->
@@ -34,6 +34,9 @@
 
         <div id="navbar" class="navbar-menu">
           <div class="navbar-start">
+            <a class="navbar-item has-text-weight-semibold" href="/repo.io/buscar/">
+              Repo.Io
+            </a>
           </div>
           <div class="navbar-end">
             <div class="field is-grouped" style="margin-top:12px;">

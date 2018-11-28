@@ -30,8 +30,8 @@ const vue = new Vue({
       repo: []
     },
     validationRules: {
-      title : "required|maxLength,250",
-      description : "required|maxLength,250",
+      title : "required|maxLength,300",
+      description : "required|maxLength,300",
       size: "isNumber|required",
       type: "isNumber|required",
       url: 'required'

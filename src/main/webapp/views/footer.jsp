@@ -5,11 +5,10 @@
 		<div class="column is-3-desktop is-6-tablet is-12-mobile"
 			style="margin-right: 50px;">
 			<a class="" href="#">
-				<figure class="image"
-					style="padding-top: 50px; padding-bottom: 50px;">
+				<figure class="image is-128x128">
 					<!-- <img src="/public/images/Logos/transparent-white.png" alt="Patrimonio social" width="200" height="1000"> -->
-					<img src="/public/images/Logos/BetterLogo.png"
-						alt="Repo.io" width="200" height="1000">
+					<img src="/repo.io/public/images/solus-logo.png"
+						alt="Repo.io">
 				</figure>
 			</a>
 			<p class="has-text-light has-text-justified">Los meros meros habaneros</p>

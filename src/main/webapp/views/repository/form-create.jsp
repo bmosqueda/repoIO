@@ -134,8 +134,9 @@
             <div class="control">
               <a 
                 v-if="!isSaving"
+                style="font-size: 16px;" 
                 class="button is-primary is-block is-alt is-large" 
-                @click="addRepository">Guardar</a>
+                @click="addRepository"><i class="fa fa-save"></i>&nbsp;Guardar</a>
               <a 
                 v-else
                 class="button is-loading is-primary is-block is-alt is-large" 
@@ -146,7 +147,7 @@
       </div>
       <!-- Resources -->
         <div class="column is-7">
-          <a class="button is-primary is-block is-alt is-large" @click="showAdd">Agregar recurso</a>
+          <a style="font-size: 16px;" class="button is-primary is-block is-alt is-large" @click="showAdd"><i class="fa fa-plus"></i>&nbsp;Agregar recurso</a>
           <aside class="menu">
               <p class="menu-label">
                 Recursos
